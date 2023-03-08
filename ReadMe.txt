@@ -6,7 +6,7 @@ The program interface is a web page where the user can edit the list of products
 
 Overall, this program is a useful tool for those who regularly order products online and want to save time and money while doing so.
 
-![](../../../Downloads/final.png)
+![](GroceryCompare.drawio.png)
 
 1.Definition of requirements:
  * Decide what information to collect about the products (name, price, website link, etc.).
