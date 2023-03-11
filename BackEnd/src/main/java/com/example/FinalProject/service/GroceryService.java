@@ -40,8 +40,8 @@ public class GroceryService{
         );
     }
 
-    public void deleteGrocery(Long id){
-        groceryRepo.deleteGroceryById(id);
+    public void deleteGrocery(List<Long> ids){
+        groceryRepo.deleteGroceryById(ids);
     }
   @Transactional
     public void deleteAllGrocery(){

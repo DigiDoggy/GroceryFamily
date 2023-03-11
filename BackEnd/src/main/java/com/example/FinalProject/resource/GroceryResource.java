@@ -31,24 +31,24 @@ public class GroceryResource {
         Grocery grocery = groceryService.findGroceryByID(id);
         return new ResponseEntity<>(grocery,HttpStatus.OK);
     }
-    //Add new employee
+    //Add new
     @PostMapping("/add")
     public ResponseEntity<Grocery> addGrocery(@RequestBody Grocery grocery){
         Grocery newGrocery = groceryService.addGrocery(grocery);
         return new ResponseEntity<>(newGrocery, HttpStatus.CREATED);
     }
 
-    //Update employee
+    //Update
     @PutMapping("/update")
     public ResponseEntity<Grocery> updateEmployee(@RequestBody Grocery employee){
         Grocery updateGrocery = groceryService.updateGrocery(employee);
         return new ResponseEntity<>(updateGrocery, HttpStatus.OK);
     }
 
-    //Delete employee
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteGrocery(@PathVariable("id") Long id){
-        groceryService.deleteGrocery(id);
+    //Delete e
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteGrocery(@RequestBody List<Long> ids){
+        groceryService.deleteGrocery(ids);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
