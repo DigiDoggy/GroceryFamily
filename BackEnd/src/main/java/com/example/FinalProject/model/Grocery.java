@@ -17,17 +17,30 @@ public class Grocery implements Serializable {
     private String prismaPrice;
     private String barboraPrice;
 
+    @Column(nullable = false,updatable = false)
+    private String groceryCode;
+
 
  public Grocery(){
  }
 
-    public Grocery(Long id, String name, String quantity, String rimiPrice, String prismaPrice, String barboraPrice) {
+    public Grocery(Long id, String name, String quantity, String rimiPrice, String prismaPrice, String barboraPrice, String groceryCode) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.rimiPrice = rimiPrice;
         this.prismaPrice = prismaPrice;
         this.barboraPrice = barboraPrice;
+        this.groceryCode=groceryCode;
+    }
+
+
+    public String getGroceryCode() {
+        return groceryCode;
+    }
+
+    public void setGroceryCode(String groceryCode) {
+        this.groceryCode = groceryCode;
     }
 
     public Long getId() {
@@ -89,6 +102,7 @@ public class Grocery implements Serializable {
                 ", rimiPrice='" + rimiPrice + '\'' +
                 ", prismaPrice='" + prismaPrice + '\'' +
                 ", barboraPrice='" + barboraPrice + '\'' +
+                ", groceryCode='" + groceryCode + '\'' +
                 '}';
     }
 }

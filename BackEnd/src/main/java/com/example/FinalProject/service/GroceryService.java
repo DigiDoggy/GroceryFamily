@@ -20,7 +20,9 @@ public class GroceryService{
         this.groceryRepo = groceryRepo;
     }
 
+
     public Grocery addGrocery(Grocery grocery){
+        grocery.setGroceryCode(UUID.randomUUID().toString());
         return groceryRepo.save(grocery);
     }
 
