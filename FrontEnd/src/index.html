@@ -9,5 +9,17 @@
 </head>
 <body>
   <app-root></app-root>
+
+<script>
+  const selectAllCheckbox = document.querySelector('#selectAll');
+const groceryCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+
+selectAllCheckbox.addEventListener('change', () => {
+  groceryCheckboxes.forEach(checkbox => {
+    checkbox.checked = selectAllCheckbox.checked;
+  });
+});
+</script>
+
 </body>
 </html>

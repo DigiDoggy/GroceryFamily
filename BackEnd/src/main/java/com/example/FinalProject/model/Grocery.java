@@ -14,19 +14,19 @@ public class Grocery implements Serializable {
     private String name;
     private String quantity;
     private String rimiPrice;
-    private String coopPrice;
+    private String prismaPrice;
     private String barboraPrice;
 
 
  public Grocery(){
  }
 
-    public Grocery(Long id, String name, String quantity, String rimiPrice, String coopPrice, String barboraPrice) {
+    public Grocery(Long id, String name, String quantity, String rimiPrice, String prismaPrice, String barboraPrice) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.rimiPrice = rimiPrice;
-        this.coopPrice = coopPrice;
+        this.prismaPrice = prismaPrice;
         this.barboraPrice = barboraPrice;
     }
 
@@ -62,12 +62,12 @@ public class Grocery implements Serializable {
         this.rimiPrice = rimiPrice;
     }
 
-    public String getCoopPrice() {
-        return coopPrice;
+    public String getPrismaPrice() {
+        return prismaPrice;
     }
 
-    public void setCoopPrice(String coopPrice) {
-        this.coopPrice = coopPrice;
+    public void setPrismaPrice(String prismaPrice) {
+        this.prismaPrice = prismaPrice;
     }
 
     public String getBarboraPrice() {
@@ -87,7 +87,7 @@ public class Grocery implements Serializable {
                 ", name='" + name + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", rimiPrice='" + rimiPrice + '\'' +
-                ", coopPrice='" + coopPrice + '\'' +
+                ", prismaPrice='" + prismaPrice + '\'' +
                 ", barboraPrice='" + barboraPrice + '\'' +
                 '}';
     }
