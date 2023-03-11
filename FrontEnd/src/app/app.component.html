@@ -1,3 +1,4 @@
+
 <table>
   <thead>
     
@@ -19,7 +20,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let grocery of groceries">
-      <td><input type="checkbox" ></td>
+      <td><input type="checkbox"  id="selectAll" ></td>
       <td contenteditable="true">{{ grocery.name }}</td>
       <td contenteditable="true">{{grocery.quantity}}</td>
       <td>{{grocery.rimiPrice}}</td>
@@ -54,4 +55,3 @@
     </tr>
   </tfoot>
 </table>
-

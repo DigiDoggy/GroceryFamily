@@ -26,6 +26,9 @@ td, th {
 
 td:last-child {
   text-align: center;
+	padding: 5px;
+	margin: 0 auto;
+	
 }
 
 
@@ -59,10 +62,6 @@ button {
   background-color: #f44336;
 }
 
-
-#deleteAllButton {
-  background-color: #555555;
-}
 
 #startButton {
   box-shadow: inset;
