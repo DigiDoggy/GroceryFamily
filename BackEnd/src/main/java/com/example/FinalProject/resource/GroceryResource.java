@@ -47,8 +47,8 @@ public class GroceryResource {
 
     //Delete e
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteGrocery(@RequestBody List<Long> ids){
-        groceryService.deleteGrocery(ids);
+    public ResponseEntity<?> deleteGrocery(@RequestBody List<String> groceryCode){
+        groceryService.deleteGrocery(groceryCode);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -13,5 +13,5 @@ public interface GroceryRepo extends JpaRepository<Grocery, Long> {
     Optional<Grocery> findGroceryById(Long id);
 
 
-    void deleteGroceryById(List<Long> ids);
+    void deleteGroceryByCode(List<String> groceryCode);
 }
