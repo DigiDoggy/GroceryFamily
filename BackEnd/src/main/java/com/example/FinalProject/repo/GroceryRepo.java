@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface GroceryRepo extends JpaRepository<Grocery, Long> {
+public interface GroceryRepo extends JpaRepository<Grocery, UUID> {
 
-    Optional<Grocery> findGroceryById(Long id);
+    Optional<Grocery> findGroceryByGroceryCode(UUID groceryCode);
+
+    void deleteByGroceryCode(UUID groceryCode);
 
 
-    void deleteGroceryByCode(List<String> groceryCode);
+
 }

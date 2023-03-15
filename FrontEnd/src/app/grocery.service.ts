@@ -25,8 +25,8 @@ export class GroceryService {
     return this.http.put<Grocery>(`${this.apiServerUrl}/grocery/update`, grocery);
   }
 
-  public deleteGrocery(groceryId: number): Observable<void>{
-    return this.http.delete<void>(`${this.apiServerUrl}/grocery/delete/${groceryId}`);
+  public deleteGrocery(groceryCode: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}/grocery/${groceryCode}`);
   }
 
   

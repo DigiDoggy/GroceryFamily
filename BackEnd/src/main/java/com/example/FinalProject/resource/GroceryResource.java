@@ -2,21 +2,26 @@ package com.example.FinalProject.resource;
 
 
 import com.example.FinalProject.model.Grocery;
+import com.example.FinalProject.repo.GroceryRepo;
 import com.example.FinalProject.service.GroceryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/grocery")
 public class GroceryResource {
     private final GroceryService groceryService;
+    private final GroceryRepo groceryRepo;
 
-    public GroceryResource(GroceryService groceryService){
+    public GroceryResource(GroceryService groceryService,
+                           GroceryRepo groceryRepo){
         this.groceryService = groceryService;
+        this.groceryRepo = groceryRepo;
     }
 
 
@@ -27,8 +32,8 @@ public class GroceryResource {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Grocery> getEmployeeById(@PathVariable("id") Long id){
-        Grocery grocery = groceryService.findGroceryByID(id);
+    public ResponseEntity<Grocery> getEmployeeById(@PathVariable("id") UUID groceryCode){
+        Grocery grocery = groceryService.findGroceryByID(groceryCode);
         return new ResponseEntity<>(grocery,HttpStatus.OK);
     }
     //Add new
@@ -45,19 +50,31 @@ public class GroceryResource {
         return new ResponseEntity<>(updateGrocery, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{groceryCode}")
+    public ResponseEntity<Void> deleteGrocery(@PathVariable UUID groceryCode) {
+        Optional<Grocery> groceryOptional = Optional.ofNullable(groceryService.findGroceryByID(groceryCode));
+
+        if (groceryOptional.isPresent()) {
+            groceryService.deleteById(groceryCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     //Delete e
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteGrocery(@RequestBody List<String> groceryCode){
-        groceryService.deleteGrocery(groceryCode);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<?> deleteGrocery(@RequestBody List<String> groceryCode){
+//        groceryService.deleteGrocery(groceryCode);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
-    @DeleteMapping("/deleteAll")
-    public ResponseEntity<Grocery> deleteALlGrocery(){
-         groceryService.deleteAllGrocery();
-        return new ResponseEntity<>(HttpStatus.OK);
-
-    }
+//    @DeleteMapping("/deleteAll")
+//    public ResponseEntity<Grocery> deleteALlGrocery(){
+//         groceryService.deleteAllGrocery();
+//        return new ResponseEntity<>(HttpStatus.OK);
+//
+//    }
 
 
 }

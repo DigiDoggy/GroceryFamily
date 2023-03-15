@@ -25,11 +25,11 @@ td, th {
 
 
 td:last-child {
+  border: 1px solid black;
+    padding: 5px;
   text-align: center;
-	padding: 5px;
-	margin: 0 auto;
-	
 }
+
 
 
 button {
@@ -75,4 +75,6 @@ button {
 .orderButtons {
   margin-top: 10px;
 }
+
+
 

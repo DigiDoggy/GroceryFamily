@@ -20,7 +20,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let grocery of groceries">
-      <td><input type="checkbox"  id="selectAll" ></td>
+      <td><input type="checkbox" [id]="grocery.groceryCode" ></td>
       <td contenteditable="true">{{ grocery.name }}</td>
       <td contenteditable="true">{{grocery.quantity}}</td>
       <td>{{grocery.rimiPrice}}</td>

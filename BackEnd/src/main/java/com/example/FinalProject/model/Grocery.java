@@ -3,29 +3,29 @@ package com.example.FinalProject.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 public class Grocery implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false,updatable = false)
-    private Long id;
+    @GeneratedValue
+    @Column(nullable = false,updatable = false, name = "grocery_code", columnDefinition = "BINARY(16)")
+    private UUID groceryCode;
     private String name;
     private String quantity;
     private String rimiPrice;
     private String prismaPrice;
     private String barboraPrice;
 
-    @Column(nullable = false,updatable = false)
-    private String groceryCode;
+
 
 
  public Grocery(){
  }
 
-    public Grocery(Long id, String name, String quantity, String rimiPrice, String prismaPrice, String barboraPrice, String groceryCode) {
-        this.id = id;
+    public Grocery( String name, String quantity, String rimiPrice, String prismaPrice, String barboraPrice, UUID groceryCode) {
+
         this.name = name;
         this.quantity = quantity;
         this.rimiPrice = rimiPrice;
@@ -35,21 +35,14 @@ public class Grocery implements Serializable {
     }
 
 
-    public String getGroceryCode() {
+    public UUID getGroceryCode() {
         return groceryCode;
     }
 
-    public void setGroceryCode(String groceryCode) {
+    public void setGroceryCode(UUID groceryCode) {
         this.groceryCode = groceryCode;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -96,7 +89,6 @@ public class Grocery implements Serializable {
     @Override
     public String toString() {
         return "Grocery{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", rimiPrice='" + rimiPrice + '\'' +

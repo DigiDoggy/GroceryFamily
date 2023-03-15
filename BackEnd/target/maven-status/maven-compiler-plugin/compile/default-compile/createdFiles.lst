@@ -1,1 +1,5 @@
+com\example\FinalProject\model\Grocery.class
 com\example\FinalProject\FinalProjectApplication.class
+com\example\FinalProject\repo\GroceryRepo.class
+com\example\FinalProject\resource\GroceryResource.class
+com\example\FinalProject\service\GroceryService.class

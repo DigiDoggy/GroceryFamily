@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit  } from '@angular/core';
+import { Component, ElementRef, OnInit  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Grocery } from './grocery';
 import { GroceryService } from './grocery.service';
@@ -8,27 +8,49 @@ import { GroceryService } from './grocery.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit,AfterViewInit {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+export class AppComponent implements OnInit {
+  // title(title: any) {
+  //   throw new Error('Method not implemented.');
+  // }
 
   public groceries: Grocery[] | undefined | null;
   public editGrocery:Grocery | undefined | null;
   public deleteGrocery:Grocery | undefined | null;
   
 
-  constructor(private groceryService: GroceryService){}
+  constructor(private groceryService: GroceryService, private elRef: ElementRef){}
 
   ngOnInit(): void {
       this.getGroceries();
       this.addRow();
+      this.checkBox();
+      this.deleteRows();
   }
 
 
 
 
 
+  public deleteRows(): void {
+    const deleteButton = document.getElementById('deleteButton') as HTMLButtonElement;
+  
+    deleteButton.addEventListener('click', () => {
+      const checkboxes = this.elRef.nativeElement.querySelectorAll('tbody input[type="checkbox"]:checked') as NodeListOf<HTMLInputElement>;
+  
+      checkboxes.forEach((checkbox) => {
+        const row = checkbox.closest('tr');
+        if (row) {
+          const groceryCode = (row.querySelector('input[type="checkbox"]') as HTMLInputElement).id;
+  
+          this.groceryService.deleteGrocery(groceryCode).subscribe((response) => {
+            console.log('Grocery with id', groceryCode, 'deleted:', response);
+          });
+  
+          row.remove();
+        }
+      });
+    });
+  }
 
   public getGroceries():void{
     this.groceryService.getGroceries().subscribe(
@@ -45,7 +67,7 @@ export class AppComponent implements OnInit,AfterViewInit {
   
     addButton.addEventListener('click', () => {
       const row = tbody.insertRow();
-      row.classList.add('td', 'table', 'td:last-child','*','th');
+      row.classList.add('td', 'table', 'td:last-child');
   
       const checkboxCell = row.insertCell();
       const checkbox = document.createElement('input');
@@ -81,23 +103,19 @@ export class AppComponent implements OnInit,AfterViewInit {
   // });
 
 
-  public ngAfterViewInit(){
-
-    
+  public checkBox(): void {
     const selectAllCheckbox = document.getElementById('selectAll') as HTMLInputElement;
-const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]' ) as NodeListOf<HTMLInputElement>;
-// console.log(selectAllCheckbox);
 
+    selectAllCheckbox.addEventListener('click', () => {
+      const checkboxes = this.elRef.nativeElement.querySelectorAll('tbody input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
 
-selectAllCheckbox.addEventListener('click', () => {
-
-  
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].checked = selectAllCheckbox.checked;
-  }
-});
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = selectAllCheckbox.checked;
+      }
+    });
   }
 }
+
 // import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
 // import { HttpClient } from '@angular/common/http';
 // import { Grocery } from './grocery';

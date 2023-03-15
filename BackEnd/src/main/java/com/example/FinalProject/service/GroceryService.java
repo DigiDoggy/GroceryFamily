@@ -22,7 +22,7 @@ public class GroceryService{
 
 
     public Grocery addGrocery(Grocery grocery){
-        grocery.setGroceryCode(UUID.randomUUID().toString());
+        grocery.setGroceryCode(UUID.randomUUID());
         return groceryRepo.save(grocery);
     }
 
@@ -34,19 +34,24 @@ public class GroceryService{
         return groceryRepo.save(grocery);
     }
 
-    public Grocery findGroceryByID(Long id){
-        return groceryRepo.findGroceryById(id).orElseThrow(
-                ()-> new RuntimeException("User by id " + id + "was not found")
+    public Grocery findGroceryByID(UUID groceryCode){
+        return groceryRepo.findGroceryByGroceryCode(groceryCode).orElseThrow(
+                ()-> new RuntimeException("User by id " + groceryCode + "was not found")
         );
     }
 
-    public void deleteGrocery(List<String> groceryCode){
-        groceryRepo.deleteGroceryByCode(groceryCode);
+    public void deleteById(UUID groceryCode) {
+        groceryRepo.deleteByGroceryCode(groceryCode);
     }
-  @Transactional
-    public void deleteAllGrocery(){
-      groceryRepo.deleteAll();
-  }
+
+
+//    public void deleteGrocery(List<String> groceryCode){
+//        groceryRepo.deleteGroceryByCode(groceryCode);
+//    }
+//  @Transactional
+//    public void deleteAllGrocery(){
+//      groceryRepo.deleteAll();
+//  }
 
 
 }
