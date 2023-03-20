@@ -13,6 +13,8 @@ public interface GroceryRepo extends JpaRepository<Grocery, UUID> {
 
     Optional<Grocery> findGroceryByGroceryCode(UUID groceryCode);
 
+    Optional<Grocery> findGroceryByName(String name);
+
     void deleteByGroceryCode(UUID groceryCode);
 
 

@@ -36,11 +36,15 @@ public class GroceryResource {
         Grocery grocery = groceryService.findGroceryByID(groceryCode);
         return new ResponseEntity<>(grocery,HttpStatus.OK);
     }
-    //Add new
+
     @PostMapping("/add")
-    public ResponseEntity<Grocery> addGrocery(@RequestBody Grocery grocery){
-        Grocery newGrocery = groceryService.addGrocery(grocery);
-        return new ResponseEntity<>(newGrocery, HttpStatus.CREATED);
+    public ResponseEntity<?> addGrocery(@RequestBody List<Grocery> groceries) {
+        try {
+            List<Grocery> savedGroceries = groceryService.addGrocery(groceries);
+            return new ResponseEntity<>(savedGroceries, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //Update
@@ -61,20 +65,6 @@ public class GroceryResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    //Delete e
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<?> deleteGrocery(@RequestBody List<String> groceryCode){
-//        groceryService.deleteGrocery(groceryCode);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
-//    @DeleteMapping("/deleteAll")
-//    public ResponseEntity<Grocery> deleteALlGrocery(){
-//         groceryService.deleteAllGrocery();
-//        return new ResponseEntity<>(HttpStatus.OK);
-//
-//    }
 
 
 }

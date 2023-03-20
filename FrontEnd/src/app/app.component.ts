@@ -9,9 +9,10 @@ import { GroceryService } from './grocery.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  // title(title: any) {
-  //   throw new Error('Method not implemented.');
-  // }
+  selectedGroceries: Grocery[] = [];
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
 
   public groceries: Grocery[] | undefined | null;
   public editGrocery:Grocery | undefined | null;
@@ -21,15 +22,71 @@ export class AppComponent implements OnInit {
   constructor(private groceryService: GroceryService, private elRef: ElementRef){}
 
   ngOnInit(): void {
+      this.loadGroceries()
       this.getGroceries();
-      this.addRow();
       this.checkBox();
       this.deleteRows();
+      this.onStartButtonClick();
   }
 
+  onProductCheckboxChange(event: Event, product: Grocery) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.selectedGroceries.push(product);
+    } else {
+      const index = this.selectedGroceries.findIndex(item => item.groceryCode === product.groceryCode);
+      if (index !== -1) {
+        this.selectedGroceries.splice(index, 1);
+      }
+    }
+  }
 
+  public onStartButtonClick(): void {
+    const groceriesToSend: Grocery[] = [];
+    const tableRows = this.elRef.nativeElement.querySelectorAll('tbody tr') as NodeListOf<HTMLTableRowElement>;
+  
+    tableRows.forEach((row: HTMLTableRowElement) => {
+      const checkbox = row.cells[0].querySelector('input[type="checkbox"]') as HTMLInputElement;
+  
+      // work with only checked boxes
+      if (checkbox.checked) {
+        const grocery: Grocery = {
+          groceryCode: checkbox.id,
+          name: row.cells[1].textContent?.trim() || '',
+          quantity: row.cells[2].textContent?.trim() || ''
+        };
+  
+        //If a product does not have a groceryCode, it means it is a new product that has not been saved to the database
+        if (!grocery.groceryCode) {
+          groceriesToSend.push(grocery);
+        }
+      }
+    });
+  
+    console.log('Groceries to send:', groceriesToSend);
+  
+  
+    // send data to the backend
+    this.groceryService.sendSelectedGroceries(groceriesToSend).subscribe((response) => {
+      console.log('Selected groceries sent to backend:', response);
+      this.selectedGroceries = [];
 
-
+      // Deselecting checkboxes in a table
+      const checkboxes = document.querySelectorAll('input[type=checkbox]');
+      checkboxes.forEach(checkbox => {
+        (checkbox as HTMLInputElement).checked = false;
+      });
+    
+    }, (error) => {
+      console.error('Error sending selected groceries to backend:', error);
+    });
+  }
+  // load data from server and refresh table
+  loadGroceries(): void {
+    this.groceryService.getGroceries().subscribe((response) => {
+      this.groceries = response;
+    });
+  }
 
   public deleteRows(): void {
     const deleteButton = document.getElementById('deleteButton') as HTMLButtonElement;
@@ -44,6 +101,7 @@ export class AppComponent implements OnInit {
   
           this.groceryService.deleteGrocery(groceryCode).subscribe((response) => {
             console.log('Grocery with id', groceryCode, 'deleted:', response);
+            this.loadGroceries();
           });
   
           row.remove();
@@ -51,6 +109,8 @@ export class AppComponent implements OnInit {
       });
     });
   }
+
+// u
 
   public getGroceries():void{
     this.groceryService.getGroceries().subscribe(
@@ -61,46 +121,41 @@ export class AppComponent implements OnInit {
     )
   };
 
+  //add button (with creating the row)
+  
   public addRow(): void {
-    const addButton = document.getElementById('addButton') as HTMLButtonElement;
     const tbody = document.querySelector('tbody') as HTMLTableSectionElement;
   
-    addButton.addEventListener('click', () => {
-      const row = tbody.insertRow();
-      row.classList.add('td', 'table', 'td:last-child');
+    const row = tbody.insertRow();
+    row.classList.add('td', 'table', 'td:last-child');
   
-      const checkboxCell = row.insertCell();
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkboxCell.appendChild(checkbox);
+    const checkboxCell = row.insertCell();
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkboxCell.appendChild(checkbox);
   
-      const groceryNameCell = row.insertCell();
-      const groceryName = document.createElement('td:last-child');
-      groceryName.contentEditable = 'true';
-      groceryNameCell.appendChild(groceryName);
+    const groceryNameCell = row.insertCell();
+    const groceryName = document.createElement('td:last-child');
+    groceryName.contentEditable = 'true';
+    groceryNameCell.appendChild(groceryName);
   
-      const quantityCell = row.insertCell();
-      const quantity = document.createElement('td:last-child');
-      quantity.contentEditable = 'true';
-      quantityCell.appendChild(quantity);
+    const quantityCell = row.insertCell();
+    const quantity = document.createElement('td:last-child');
+    quantity.contentEditable = 'true';
+    quantityCell.appendChild(quantity);
   
-      const rimiPriceCell = row.insertCell();
-      const rimiPrice = document.createElement('td:last-child');
-      rimiPriceCell.appendChild(rimiPrice);
+    const rimiPriceCell = row.insertCell();
+    const rimiPrice = document.createElement('td:last-child');
+    rimiPriceCell.appendChild(rimiPrice);
   
-      const prismaPriceCell = row.insertCell();
-      const prismaPrice = document.createElement('td:last-child');
-      prismaPriceCell.appendChild(prismaPrice);
+    const prismaPriceCell = row.insertCell();
+    const prismaPrice = document.createElement('td:last-child');
+    prismaPriceCell.appendChild(prismaPrice);
   
-      const barboraPriceCell = row.insertCell();
-      const barboraPrice = document.createElement('td:last-child');
-      barboraPriceCell.appendChild(barboraPrice);
-    });
+    const barboraPriceCell = row.insertCell();
+    const barboraPrice = document.createElement('td:last-child');
+    barboraPriceCell.appendChild(barboraPrice);
   }
-  
-  // window.addEventListener('load', () => {
-  //   addRow();
-  // });
 
 
   public checkBox(): void {
@@ -115,47 +170,3 @@ export class AppComponent implements OnInit {
     });
   }
 }
-
-// import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Grocery } from './grocery';
-// import { GroceryService } from './grocery.service';
-
-// @Component({
-//   selector: 'app-root',
-//   templateUrl: './app.component.html',
-//   styleUrls: ['./app.component.css']
-// })
-// export class AppComponent implements OnInit, AfterViewInit {
-  
-//   @ViewChild('checkboxes')
-//   checkboxes!: ElementRef;
-
-//   public groceries: Grocery[] | undefined | null;
-//   public editGrocery: Grocery | undefined | null;
-//   public deleteGrocery: Grocery | undefined | null;
-
-//   constructor(private groceryService: GroceryService, private renderer: Renderer2) {}
-
-//   ngOnInit(): void {
-//       this.getGroceries();
-//   }
-
-//   public getGroceries(): void {
-//     this.groceryService.getGroceries().subscribe((Response: Grocery[]) => {
-//         this.groceries = Response;
-//         console.log(this.groceries);
-//     });
-//   }
-
-//   public ngAfterViewInit() {
-//     const selectAllCheckbox = document.getElementById('selectAll') as HTMLInputElement;
-//     const checkboxes = this.checkboxes.nativeElement.querySelectorAll('input[type="checkbox"]');
-
-//     selectAllCheckbox.addEventListener('click', () => {
-//       checkboxes.forEach((checkbox: any) => {
-//         this.renderer.setProperty(checkbox, 'checked', selectAllCheckbox.checked);
-//       });
-//     });
-//   }
-// }

@@ -13,12 +13,12 @@ export class GroceryService {
 
   constructor(private http: HttpClient) { }
 
-  public getGroceries(): Observable<Grocery[]>{
-    return this.http.get<Grocery[]>(`${this.apiServerUrl}/grocery/all`);
+  public sendSelectedGroceries(groceries: Grocery[]): Observable<any> {
+    return this.http.post<any>(`${this.apiServerUrl}/grocery/add`, groceries);
   }
 
-  public addGrocery(grocery: Grocery): Observable<Grocery>{
-    return this.http.post<Grocery>(`${this.apiServerUrl}/grocery/add`,grocery);
+  public getGroceries(): Observable<Grocery[]>{
+    return this.http.get<Grocery[]>(`${this.apiServerUrl}/grocery/all`);
   }
 
   public updateGrocery(grocery: Grocery): Observable<Grocery>{
@@ -28,9 +28,5 @@ export class GroceryService {
   public deleteGrocery(groceryCode: string): Observable<any> {
     return this.http.delete<any>(`${this.apiServerUrl}/grocery/${groceryCode}`);
   }
-
-  
-
-  
 
 }

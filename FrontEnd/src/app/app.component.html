@@ -4,15 +4,15 @@
     
     <tr>
       <th>
-        <input type="checkbox" id="selectAll" >
-        <label for="selectAll">Take all</label>
+        <input type="checkbox" id="selectAll" (click)="checkBox()"  >
+        <label for="selectAll">Take all</label> 
       </th>
       <th>Grocery</th>
       <th>Amount</th>
       <th id="rimiPrice">Rimi price</th>
       <th>Prisma price</th>
       <th>Barbora price</th>
-      <th  id="invisible"><button id="startButton">Start</button></th>
+      <th  id="invisible"><button id="startButton" (click)="onStartButtonClick()">Start</button></th>
       
     </tr>
     
@@ -20,20 +20,12 @@
   </thead>
   <tbody>
     <tr *ngFor="let grocery of groceries">
-      <td><input type="checkbox" [id]="grocery.groceryCode" ></td>
+      <td><input type="checkbox" [id]="grocery.groceryCode" (change)="onProductCheckboxChange($event, grocery)" ></td>
       <td contenteditable="true">{{ grocery.name }}</td>
       <td contenteditable="true">{{grocery.quantity}}</td>
       <td>{{grocery.rimiPrice}}</td>
       <td>{{grocery.prismaPrice}}</td>
       <td>{{grocery.barboraPrice}}</td>
-    </tr>
-    <tr>
-      <td><input type="checkbox"></td>
-      <td contenteditable="true">Bread</td>
-      <td contenteditable="true">1</td>
-      <td>0.99</td>
-      <td>1.05</td>
-      <td>0.90</td>
     </tr>
   </tbody>
   <tfoot>
@@ -46,8 +38,8 @@
       <th id="barboraPrice"></th>
     </tr>
     <tr>
-      <th id="invisible"><button id="addButton">Add</button></th>
-      <th id="invisible"><button id="deleteButton">Delete</button></th>
+      <th id="invisible"><button id="addButton" (click)="addRow()">Add</button></th>
+      <th id="invisible"><button id="deleteButton" (click)="deleteRows()">Delete</button></th>
       <th id="invisible"></th>
       <th id="invisible"><button id="orderRimiButton" class="orderButton">Order </button></th>
       <th id="invisible"><button id="orderPrismaButton" class="orderButton">Order </button></th>

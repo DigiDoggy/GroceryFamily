@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Entity;
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -21,9 +20,21 @@ public class GroceryService{
     }
 
 
-    public Grocery addGrocery(Grocery grocery){
-        grocery.setGroceryCode(UUID.randomUUID());
-        return groceryRepo.save(grocery);
+    public List<Grocery> addGrocery(List<Grocery> groceries) {
+        List<Grocery> savedGroceries = new ArrayList<>();
+
+        for (Grocery grocery : groceries) {
+            Optional<Grocery> existingGrocery = groceryRepo.findGroceryByName(grocery.getName());
+            if (existingGrocery.isEmpty()) {
+                // If there is no such element, add it to the database
+                grocery.setGroceryCode(UUID.randomUUID());
+                savedGroceries.add(groceryRepo.save(grocery));
+            } else {
+                existingGrocery.get().setQuantity(grocery.getQuantity());
+                savedGroceries.add(groceryRepo.save(existingGrocery.get()));
+            }
+        }
+        return savedGroceries;
     }
 
     public List<Grocery> findAllGrocery(){
@@ -43,15 +54,6 @@ public class GroceryService{
     public void deleteById(UUID groceryCode) {
         groceryRepo.deleteByGroceryCode(groceryCode);
     }
-
-
-//    public void deleteGrocery(List<String> groceryCode){
-//        groceryRepo.deleteGroceryByCode(groceryCode);
-//    }
-//  @Transactional
-//    public void deleteAllGrocery(){
-//      groceryRepo.deleteAll();
-//  }
 
 
 }
