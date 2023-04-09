@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   constructor(private groceryService: GroceryService, private elRef: ElementRef){}
 
   ngOnInit(): void {
-      this.loadGroceries()
+      this.loadGroceries();
       this.getGroceries();
       this.checkBox();
       this.deleteRows();
