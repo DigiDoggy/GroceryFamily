@@ -6,7 +6,6 @@ import com.example.FinalProject.repo.GroceryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Entity;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -37,9 +36,13 @@ public class GroceryService{
         return savedGroceries;
     }
 
+
+
     public List<Grocery> findAllGrocery(){
         return groceryRepo.findAll();
     }
+
+
 
     public Grocery updateGrocery(Grocery grocery){
         return groceryRepo.save(grocery);

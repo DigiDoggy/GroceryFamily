@@ -1,67 +1,80 @@
 package com.example.FinalProject.service;
 
+import com.example.FinalProject.model.Grocery;
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.lang.System;
-import java.nio.file.WatchEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.time.Duration;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+@Service
 public class WebScraperService {
 
-    private ProductFilter productFilter ;
+    // filter for product by name
+    private ProductFilter productFilter;
 
-    public WebScraperService(){
-        productFilter = new ProductFilter();
-    }
+//    public WebScraperService(ProductFilter productFilter) {
+//        this.productFilter = productFilter;
+//    }
 
+    // get data from db
+    private GroceryService groceryService;
+
+
+
+    // pages for scraping
     String rimi_URL = "https://www.rimi.ee/epood/ee/";
     String prisma_URL = "https://www.prisma.ee/";
     String barbora_URL = "https://www.barbora.ee/";
+
+    @Autowired
     private WebDriver driver;
 
-    public WebScraperService() {
-        System.setProperty("webdriver.chrome.driver", "C:/path/to/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        this.driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Implicit wait 5 seconds
-
+    //constructor to get data from db
+    public WebScraperService(GroceryService groceryService, WebDriver driver) {
+        this.groceryService = groceryService;
+        this.driver = driver;
     }
 
     // apply cookie
-    public void applyCookie(String text) {
+    private void applyCookie(String text) {
         WebElement element = driver.findElement(By.linkText(text));
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         element.click();
     }
+
     //enter the product name to search line
-    public void searchProduct(String productName){
+    private void searchProduct(String productName) {
         WebElement searchInput = driver.findElement(By.id("search-input"));
         searchInput.sendKeys(productName);
         searchInput.submit();
-
     }
-    // find product by name
+
+    // Get Collection with product name and Quantity
+    private LinkedHashMap<String, String> getProductAndQuantity() {
+
+        List<Grocery> groceries = groceryService.findAllGrocery();
+
+        LinkedHashMap<String, String> productAndQuantity = new LinkedHashMap<>();
+
+        for (Grocery product : groceries) {
+            productAndQuantity.put(product.getName(), product.getQuantity());
+        }
+        return productAndQuantity;
+    }
 
 
-
-    public void scrapeRimi(String productName, int quantity) {
+    public void scrapeRimi() {
 
         driver.get(rimi_URL);
 
 
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        Thread wait= new Thread();
+        Thread wait = new Thread();
         try {
             wait.sleep(500);
         } catch (InterruptedException e) {
@@ -70,7 +83,17 @@ public class WebScraperService {
 
         applyCookie("Kinnita kõik");
 
-        searchProduct(productName);
+        LinkedHashMap<String, String> productAndQuantity = getProductAndQuantity();
+
+
+        for (Map.Entry<String, String> entry : productAndQuantity.entrySet()) {
+            String productName = entry.getKey();
+            String productQuantity = entry.getValue();
+
+
+
+            searchProduct(productName);
+        }
 
 
         // Найти элемент по id
@@ -92,50 +115,6 @@ public class WebScraperService {
     }
 
 
-//    public void scrapeRimi(String productName, int quantity) throws InterruptedException {
-//        driver.get(rimi_URL);
-//
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-//        Thread.sleep(5000);
-//        WebElement elementos = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@id='CybotCookiebotDialogBodyButtonDecline']")));
-//
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='hidden'", elementos);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("CybotCookiebotDialogBody")));
-//
-//// Close the cookie banner
-//        WebElement closeButton = driver.findElement(By.xpath("//button[@id='CybotCookiebotDialogBodyButtonDecline']"));
-//        closeButton.click();
-//
-////        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-////        WebElement elementos = wait.until(ExpectedConditions.elementToBeClickable(By.id("CybotCookiebotDialogBodyButtonDecline")));
-////
-////        ((JavascriptExecutor) driver).executeScript("arguments[0].style.visibility='hidden'", elementos);
-////        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("CybotCookiebotDialogBody")));
-////
-////// Close the cookie banner
-////        WebElement closeButton = driver.findElement(By.id("CybotCookiebotDialogBodyButtonDecline"));
-////        closeButton.click();
-////        try {
-////            WebElement cookieWarning = driver.findElement(By.id("CybotCookiebotDialog"));
-////            if (cookieWarning.isDisplayed()) {
-////                // Предупреждение о куки присутствует на странице
-////                // Можно выполнить соответствующие действия, например, закрыть его
-////                WebElement button = driver.findElement(By.cssSelector("button[data-gtm-product-id='"+cheapestProductButtonId+"']"));
-////                JavascriptExecutor executor = (JavascriptExecutor)driver;
-////                executor.executeScript("arguments[0].click();", button);
-//////                cookieWarning.findElement(By.id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll")).click();
-////            }
-////        } catch (NoSuchElementException e) {
-////            // Предупреждение о куки отсутствует на странице
-////        }
-//
-////        try {
-////            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-////            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("CybotCookiebotDialog")));
-////        } catch (TimeoutException e) {
-////            // Cookie banner did not disappear in time, continue with scraping
-////            System.out.println("Cookie banner did not disappear in time.");
-////        }
 //        //searching
 //        WebElement searchInput = driver.findElement(By.id("search-input"));
 //        searchInput.sendKeys(productName); // for example "Täispiim 3,8-4,2%"
