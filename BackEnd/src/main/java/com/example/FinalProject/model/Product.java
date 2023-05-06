@@ -4,23 +4,39 @@ import java.math.BigDecimal;
 
 public class Product {
     private String name;
-    private BigDecimal price;
+    private BigDecimal pricePerUnit;
     private Measurement measurement;
+    private BigDecimal price;
+    private String addToCardPage;
 
-    public Product(String name, BigDecimal price) {
+
+
+    public Product(String name, BigDecimal pricePerUnit, BigDecimal price,String addToCardPage) {
         this.name = name;
+        this.pricePerUnit = pricePerUnit;
         this.price = price;
+        this.addToCardPage=addToCardPage;
         this.measurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(name));
     }
+
+
 
 
     @Override
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
-                ", price=" + price +
+                ", price=" + pricePerUnit +
                 ", measurement=" + measurement +
                 '}';
+    }
+
+    public String getAddToCardPage() {
+        return addToCardPage;
+    }
+
+    public void setAddToCardPage(String addToCardPage) {
+        this.addToCardPage = addToCardPage;
     }
 
     public String getName() {
@@ -28,7 +44,7 @@ public class Product {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return pricePerUnit;
     }
 
     public Measurement getMeasurement() {

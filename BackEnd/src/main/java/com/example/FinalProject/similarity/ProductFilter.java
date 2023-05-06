@@ -1,33 +1,16 @@
 package com.example.FinalProject.similarity;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Arrays;
 
 public class ProductFilter {
-    private BigramMatcher bigramMatcher;
 
-    public ProductFilter() {
-        bigramMatcher = new BigramMatcher();
+    public static boolean containsAllWords(String str, String substring) {
+        String[] strWords = str.split("\\s+");
+        String[] subWords = substring.split("\\s+");
+        Arrays.sort(strWords);
+        Arrays.sort(subWords);
+        return Arrays.asList(strWords).containsAll(Arrays.asList(subWords));
     }
 
-    public List<String> filterProducts(List<String> products, String searchString) {
-        List<String> filteredProducts = new ArrayList<>();
-        boolean specificSearch = searchString.contains(" ");
-
-        for (String product : products) {
-            if (specificSearch) {
-                double similarityThreshold = 0.9;
-                String bestMatch = bigramMatcher.findBestMatchWithThreshold(searchString, products, similarityThreshold);
-                if (bestMatch != null) {
-                    filteredProducts.add(bestMatch);
-                }
-            } else {
-                if (product.toLowerCase().contains(searchString.toLowerCase())) {
-                    filteredProducts.add(product);
-                }
-            }
-        }
-
-        return filteredProducts;
-    }
 }
