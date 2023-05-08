@@ -6,6 +6,7 @@ import com.example.FinalProject.model.Product;
 //import com.example.FinalProject.similarity.ProductFilter;
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -25,8 +23,19 @@ public class WebScraperService {
     // filter for product by name
 //    private ProductFilter productFilter;
     private String productNameFromDB;
+    private String productQuantity;
 
     //getters and setters
+
+
+    public String getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(String productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
     public String getProductNameFromDB() {
         return productNameFromDB;
     }
@@ -103,6 +112,8 @@ public class WebScraperService {
         for (Map.Entry<String, String> entry : productAndQuantity.entrySet()) {
             String productName = entry.getKey();
             setProductNameFromDB(productName);
+            setProductQuantity(productQuantity);
+            System.out.println(getProductQuantity());
             System.out.println(getProductNameFromDB());
             String productQuantity = entry.getValue();
 
@@ -113,8 +124,12 @@ public class WebScraperService {
 
             System.out.println(productNameFromDB);
             searchProduct(productName);
-            //todo remove the link field from the product, I'll make it easier. After the lowest unit price (measurement), I will return to the most profitable product and click on the link to find the words in the desired tag.
-            listOfProducts(products, productNameFromDB);
+            //create cheapest product
+            Product product=cheapestProduct(products, productNameFromDB);
+            // add to card
+           addToCard(product.getPathToProductTag());
+
+
 
 
 //            products.add(getNewProduct());
@@ -123,6 +138,20 @@ public class WebScraperService {
         }
     }
 
+    public void addTheRightAmountOfProducts(Product product,String productQuantity){
+        String unit= product.getMeasurement()
+                .getUnit();
+        String value = product.getMeasurement()
+                .getValue();
+
+        //todo you need to think about how to add additional products if there are more than one, starting from the unit of measurement
+    }
+//add product to card
+    public void addToCard(String path){
+        WebElement element=driver.findElement(By.xpath(path));
+        WebDriverWait wait1=new WebDriverWait(driver,Duration.ofSeconds(10));
+        element.click();
+    }
     //Creating method which create product(find price per unit, and name)
 //    public Product getNewProduct() {
 //
@@ -137,15 +166,17 @@ public class WebScraperService {
 //    }
 
     //Checks for similarity and adds products to array
-    public List<Product> listOfProducts(List<Product> products, String productNameFromDB) {
+    public Product cheapestProduct(List<Product> products, String productNameFromDB) {
 
         for (int i = 1; i <= 20; i++) {
+
+
             String productName = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[" + i + "]/div/div[3]/p[1]")).getText().toLowerCase();
             String priceStringPerUnit = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[" + i + "]/div/div[3]/div/div/div[2]/p")).getText();
             String priceString = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+ i +"]/div/div[3]/div/div/div[1]/span")).getText() +
                     "." +
                     driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+ i + "]/div/div[3]/div/div/div[1]/div/sup")).getText();
-            String addToCardPage = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+i+"]/div/div[3]/div/form[2]/button")).getText();
+
 
             //take string example (1.00 eur/l)- and create 1,00 for BigDecimal() method
 
@@ -153,13 +184,22 @@ public class WebScraperService {
 
             //Checking for similarity
             if (ProductFilter.containsAllWords(productName, productNameFromDB)) {
-                Product product = new Product(productName, new BigDecimal(productPricePerUnit), new BigDecimal(priceString),addToCardPage);
-                System.out.println(productName + "Price: " + productPricePerUnit + " page: " + addToCardPage );
+                Product product = new Product(productName, new BigDecimal(productPricePerUnit), new BigDecimal(priceString));
+                System.out.println(productName + "Price for unit: " + productPricePerUnit + " Price for product: " + priceString);
+                product.setPathToProductTag(i);
                 products.add(product);
             }
 
         }
-        return products;
+        return productToBuy(products);
+    }
+
+    //todo check this method
+    //Searching cheapest product
+    public Product productToBuy(List<Product> products){
+        Product cheapestProduct = Collections.min(products,Comparator.comparing(Product::getPricePerUnit));
+        System.out.println(cheapestProduct.toString());
+        return cheapestProduct;
     }
 
 
