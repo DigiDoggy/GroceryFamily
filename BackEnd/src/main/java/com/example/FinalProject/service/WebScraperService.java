@@ -7,8 +7,10 @@ import com.example.FinalProject.model.Product;
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.locators.RelativeLocator;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.json.GsonTester;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -19,9 +21,10 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class WebScraperService {
+    private Grocery grocery;
 
     // filter for product by name
-//    private ProductFilter productFilter;
+
     private String productNameFromDB;
     private String productQuantity;
 
@@ -91,6 +94,72 @@ public class WebScraperService {
     }
 
 
+
+    public void addTheRightAmountOfProducts(Product product,String productQuantity){
+        if (productQuantity!= null && !productQuantity.isEmpty()){
+            String unit = product.getMeasurement()
+                    .getUnit();
+
+            int valueFromProduct
+                    = Integer.parseInt(
+                    product.getMeasurement()
+                            .getValue()
+            );
+
+            Measurement dbMeasurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(productQuantity));
+            int groceryValue = Integer.parseInt(dbMeasurement.getValue());
+            System.out.println(product.getPathToAddMore());
+            WebElement element = driver.findElement(By.xpath(product.getPathToAddMore()));
+            System.out.println("Включение добавления дополнительного товара");
+//            Measurement groceryMeasurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(productQuantity));
+            if(productQuantity.contains("tk")||dbMeasurement.getUnit().isEmpty()){
+                System.out.println(groceryValue + "количество сырков");
+                ifGroceryUnitIsTK(groceryValue,product);
+            }else {
+                System.out.println("должно считать количество");
+                ifGroceryIsKgGLMl(product, productQuantity, element, groceryValue, valueFromProduct, unit);
+
+            }
+
+        }else {
+            System.out.println(productQuantity+ "//////////");
+            System.out.println("amount of product null");
+
+            }
+
+    }
+
+    public void ifGroceryIsKgGLMl(Product product,String productQuantity, WebElement element, int groceryValue,int valueFromProduct, String unit){
+
+        int twinProductValue = valueFromProduct;
+
+        while (groceryValue == valueFromProduct
+                || groceryValue > valueFromProduct
+        ) {
+            //click to the add agan product
+            System.out.println("значение базы данных - "+groceryValue +"значение продукта с сайта - " + valueFromProduct
+            );
+            WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(10));
+            System.out.println(product.getPathToAddMore());
+            element.click();
+            valueFromProduct += twinProductValue;
+        }
+    }
+    //if grocery don`t have unit(kg,g,l,ml) add more products to the card
+    public void ifGroceryUnitIsTK(int groceryValue,Product product){
+
+
+        WebDriverWait wait1 = new WebDriverWait(driver, Duration.ofSeconds(30));
+        for (int i=(groceryValue-2);i>=0;i--){
+                        System.out.println(i+ " считаем покупки количество кликов");
+
+            WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(By.xpath(product.getPathToAddMore())));
+            element.click();
+
+        }
+
+    }
+
     public void scrapeRimi() {
 
         driver.get(rimi_URL);
@@ -128,6 +197,12 @@ public class WebScraperService {
             Product product=cheapestProduct(products, productNameFromDB);
             // add to card
            addToCard(product.getPathToProductTag());
+           if(productQuantity!= null && !productQuantity.isEmpty() ){
+               System.out.println(productQuantity);
+           }
+
+
+           addTheRightAmountOfProducts(product,productQuantity);
 
 
 
@@ -137,19 +212,10 @@ public class WebScraperService {
 
         }
     }
-
-    public void addTheRightAmountOfProducts(Product product,String productQuantity){
-        String unit= product.getMeasurement()
-                .getUnit();
-        String value = product.getMeasurement()
-                .getValue();
-
-        //todo you need to think about how to add additional products if there are more than one, starting from the unit of measurement
-    }
 //add product to card
     public void addToCard(String path){
-        WebElement element=driver.findElement(By.xpath(path));
-        WebDriverWait wait1=new WebDriverWait(driver,Duration.ofSeconds(10));
+        WebDriverWait wait1=new WebDriverWait(driver,Duration.ofSeconds(20));
+        WebElement element = wait1.until(ExpectedConditions.elementToBeClickable(By.xpath(path)));
         element.click();
     }
     //Creating method which create product(find price per unit, and name)
@@ -167,6 +233,7 @@ public class WebScraperService {
 
     //Checks for similarity and adds products to array
     public Product cheapestProduct(List<Product> products, String productNameFromDB) {
+
 
         for (int i = 1; i <= 20; i++) {
 
@@ -194,7 +261,6 @@ public class WebScraperService {
         return productToBuy(products);
     }
 
-    //todo check this method
     //Searching cheapest product
     public Product productToBuy(List<Product> products){
         Product cheapestProduct = Collections.min(products,Comparator.comparing(Product::getPricePerUnit));
@@ -205,132 +271,5 @@ public class WebScraperService {
 
 }
 
-
-// Найти элемент по id
-//        WebElement element = driver.findElement(By.id("CybotCookiebotDialog"));
-//
-//        // Получить текст элемента и вывести его в консоль
-//        String text = element.getText();
-//        System.out.println("Text of the element: " + text);
-//
-//        // Закрыть браузер
-//        driver.quit();
-
-//        WebElement bodyTag = driver.findElement(By.tagName("body"));
-//        String clasName= bodyTag.getAttribute("class");
-//
-//        System.out.println(clasName+ "_______________________________________________________");
-
-
-//        //searching
-//        WebElement searchInput = driver.findElement(By.id("search-input"));
-//        searchInput.sendKeys(productName); // for example "Täispiim 3,8-4,2%"
-//        searchInput.submit();// trying that way
-////        searchInput.sendKeys(Keys.ENTER);  // second way
-//
-//
-//
-//        // Get product list
-////        List<WebElement> productList = driver.findElements(By.cssSelector(".product-grid__item"));
-////
-////        Map<String, Integer> productMap = new HashMap<>();
-////
-////        for (WebElement product : productList) {
-////            String productTitle = product.findElement(By.cssSelector(".product-card__name")).getText();
-////            String productPrice = product.findElement(By.cssSelector(".price-box__price")).getText();
-////            String productLink = product.findElement(By.cssSelector("a")).getAttribute("href");
-////
-////            int price = parsePrice(productPrice);
-////            productMap.put(productLink, price);
-////        }
-////        List<WebElement> productList = driver.findElements(By.cssSelector(".card.-horizontal-for-mobile"));
-////        List<WebElement> productList;
-//        List<WebElement> productList = driver.findElements(By.cssSelector(".product-grid__item"));
-////        productList = driver.findElements(By.id(".product-grid_item .card_name ").findElement(productName));
-//
-//        if(productList.isEmpty()){
-//            System.out.println("Error with product LIST **********************************");
-//            driver.close();
-//        }else{
-//            for (WebElement element : productList) {
-//                System.out.println(element.toString() + "************************************");
-//            }
-//        }
-//        Map<String, Double> productMap = new HashMap<>();
-//
-//        for (WebElement product : productList) {
-//            WebElement pricePer = product.findElement(By.cssSelector(".card__price-per"));
-//            String pricePerText = pricePer.getText();
-//            System.out.println(pricePerText+ "/////////////////////////////////////////////////////////");
-//            String[] pricePerParts = pricePerText.split("\\s+");
-//            double price = Double.parseDouble(pricePerParts[0].replace(",", "."));
-//            String priceUnit = pricePerParts[2];
-//
-//            System.out.println(price+ "---------------------------------------------------");
-//
-//            WebElement button = product.findElement(By.cssSelector("button[data-gtm-event-category='addToBasket']"));
-//            String id = button.getAttribute("data-gtm-product-id");
-//            System.out.println("Button ID: " + id);
-//
-//            System.out.println(id +" --------------------------------------------------");
-//
-//            productMap.put(id,price);
-//
-//        }
-//
-//        //find the cheapest product
-//        String cheapestProductButtonId=null;
-//        Double cheapestProductPrice= Double.MAX_VALUE;
-//
-//        for (Map.Entry<String, Double> entry: productMap.entrySet()) {
-//
-//            if (entry.getValue()<cheapestProductPrice){
-//                cheapestProductButtonId= entry.getKey();
-//                cheapestProductPrice= entry.getValue();
-//            }
-//        }
-//        System.out.println("--------------------------------");
-//        System.out.println(cheapestProductButtonId);
-//        System.out.println(cheapestProductPrice);
-//        System.out.println("--------------------------------");
-//
-//        // Go to the cheapest product page and add the desired quantity to the cart
-//        if(cheapestProductButtonId!=null){
-//
-//
-//            WebElement addToCartButton = driver.findElement(By.cssSelector("button[data-gtm-product-id='"+cheapestProductButtonId+"']"));
-//            addToCartButton.click();
-//
-//
-//        }
-//
-//
-//
-//
-//        if(!productMap.isEmpty()){
-//            for (Map.Entry<String, Double> entry : productMap.entrySet()) {
-//                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-//            }
-//        }else {
-//            System.out.println("ERROR MAP IS EMPTY ");
-//        }
-//
-//
-//    }
-//    public int parsePrice(String priceString) throws NumberFormatException {
-//        if (priceString == null || priceString.isEmpty()) {
-//            throw new IllegalArgumentException("Price string cannot be null or empty.");
-//        }
-//
-//        String normalizedPriceString = priceString.replaceAll(",", ".");
-//        Matcher matcher = Pattern.compile("(\\d+\\.\\d{1,2})").matcher(normalizedPriceString);
-//
-//        if (matcher.find()) {
-//            double priceDouble = Double.parseDouble(matcher.group(1));
-//            return (int) (priceDouble * 100);
-//        } else {
-//            throw new NumberFormatException("Price string does not contain a valid price.");
-//        }
-//    }
 
 

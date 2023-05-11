@@ -15,7 +15,9 @@ public class Product {
     private Measurement measurement;
     //todo mb need create something for bottles (Pant price is 0.10 eur)
     private BigDecimal price;
+    //mb good plan to not create 2 path, and just create which number of li that product is.
     private String pathToProductTag;
+    private String pathToAddMore;
     // For add product to card
     //  only for rimi yet
     private String addToCard="Lisa ostukorvi";
@@ -42,12 +44,22 @@ public class Product {
     }
 //Get/Setters
 
+
+    public String getPathToAddMore() {
+        return pathToAddMore;
+    }
+
+    public void setPathToAddMore(String pathToAddMore) {
+        this.pathToAddMore = pathToAddMore;
+    }
+
     public String getPathToProductTag() {
         return pathToProductTag;
     }
 
     public void setPathToProductTag(int i) {
         this.pathToProductTag = "//*[@id='main']/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+ i +"]/div/div[3]/div/form[2]/button";
+        setPathToAddMore("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+i+"]/div/div[3]/div/form[3]/button[2]");
     }
 
     public String getAddToCardPage() {
