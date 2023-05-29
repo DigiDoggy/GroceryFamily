@@ -3,21 +3,20 @@ package com.example.FinalProject.service;
 import com.example.FinalProject.model.Grocery;
 import com.example.FinalProject.model.Measurement;
 import com.example.FinalProject.model.Product;
-//import com.example.FinalProject.similarity.ProductFilter;
+
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.locators.RelativeLocator;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.json.GsonTester;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+
+// TODO: 29-May-23  You should use selectors instead of xpath.
+//  Understand why sometimes a product is added to the cart, and sometimes not. (Check maybe you need to check to add to cart)
 
 @Service
 public class WebScraperService {
@@ -29,7 +28,6 @@ public class WebScraperService {
     private String productQuantity;
 
     //getters and setters
-
 
     public String getProductQuantity() {
         return productQuantity;
@@ -124,7 +122,6 @@ public class WebScraperService {
         }else {
             System.out.println(productQuantity+ "//////////");
             System.out.println("amount of product null");
-
             }
 
     }
@@ -205,11 +202,6 @@ public class WebScraperService {
            addTheRightAmountOfProducts(product,productQuantity);
 
 
-
-
-//            products.add(getNewProduct());
-
-
         }
     }
 //add product to card
@@ -219,19 +211,7 @@ public class WebScraperService {
         element.click();
     }
     //Creating method which create product(find price per unit, and name)
-//    public Product getNewProduct() {
-//
-//        WebElement webElement1 = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[1]/div/div[3]/p[1]"));
-//        String nameOfProduct = webElement1.getText();
-//        String priceString = driver.findElement(By.xpath("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[1]/div/div[3]/div/div/div[2]/p")).getText();
-//        //take string example (1.00 eur/l)- and create 1,00 for BigDecimal() method
-//        String price = priceString.split(" ")[0].replace(',', '.');
-//        System.out.println(price);
-//        Product newProduct = new Product(nameOfProduct, new BigDecimal(price));
-//        return newProduct;
-//    }
 
-    //Checks for similarity and adds products to array
     public Product cheapestProduct(List<Product> products, String productNameFromDB) {
 
 

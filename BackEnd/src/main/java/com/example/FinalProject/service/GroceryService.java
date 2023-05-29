@@ -58,5 +58,11 @@ public class GroceryService{
         groceryRepo.deleteByGroceryCode(groceryCode);
     }
 
+    //update rimiPrice
+//    public void updateRimiPrice(UUID groceryCode, double rimiPrice) {
+//        Grocery grocery = findGroceryByID(groceryCode);
+//        grocery.setRimiPrice(rimiPrice);
+//        groceryRepo.save(grocery);
+//    }
 
 }
