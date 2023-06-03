@@ -48,6 +48,10 @@ public class GroceryService{
         return groceryRepo.save(grocery);
     }
 
+    public Optional<Grocery> findGroceryByName(String name){
+        return groceryRepo.findGroceryByName(name);
+    }
+
     public Grocery findGroceryByID(UUID groceryCode){
         return groceryRepo.findGroceryByGroceryCode(groceryCode).orElseThrow(
                 ()-> new RuntimeException("User by id " + groceryCode + "was not found")

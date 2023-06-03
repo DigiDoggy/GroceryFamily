@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
 
+import static com.codeborne.selenide.Selenide.$;
+
 // TODO: 29-May-23  You should use selectors instead of xpath.
 //  Understand why sometimes a product is added to the cart, and sometimes not. (Check maybe you need to check to add to cart)
 
@@ -26,6 +28,8 @@ public class WebScraperService {
 
     private String productNameFromDB;
     private String productQuantity;
+
+    private int rimiPrice;
 
     //getters and setters
 
@@ -66,7 +70,9 @@ public class WebScraperService {
 
     // apply cookie
     private void applyCookie(String text) {
-        WebElement element = driver.findElement(By.linkText(text));
+//        WebElement element = driver.findElement(By.linkText(text));
+        WebElement element = driver.findElement(By.id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         element.click();
     }
@@ -172,6 +178,7 @@ public class WebScraperService {
 
         applyCookie("Kinnita kõik");
 
+
         LinkedHashMap<String, String> productAndQuantity = getProductAndQuantity();
 
 
@@ -198,8 +205,16 @@ public class WebScraperService {
                System.out.println(productQuantity);
            }
 
-
+// TODO: 04-Jun-23 something wrong 
            addTheRightAmountOfProducts(product,productQuantity);
+            Optional<Grocery> groceryOptional = groceryService.findGroceryByName(productNameFromDB);
+            if (groceryOptional.isPresent()) {
+                Grocery grocery = groceryOptional.get();
+                grocery.setRimiPrice(product.getPrice().toString());
+                System.out.println("**************** CHECK PRICE *********************");
+                System.out.println(grocery.getRimiPrice());
+                System.out.println("**************** CHECK PRICE *********************");
+            }
 
 
         }

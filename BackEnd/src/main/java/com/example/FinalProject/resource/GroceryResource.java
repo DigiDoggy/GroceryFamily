@@ -19,22 +19,22 @@ public class GroceryResource {
     private final GroceryRepo groceryRepo;
 
     public GroceryResource(GroceryService groceryService,
-                           GroceryRepo groceryRepo){
+                           GroceryRepo groceryRepo) {
         this.groceryService = groceryService;
         this.groceryRepo = groceryRepo;
     }
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<Grocery>> getAllGrocery(){
+    public ResponseEntity<List<Grocery>> getAllGrocery() {
         List<Grocery> grocery = groceryService.findAllGrocery();
         return new ResponseEntity<>(grocery, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Grocery> getEmployeeById(@PathVariable("id") UUID groceryCode){
+    public ResponseEntity<Grocery> getEmployeeById(@PathVariable("id") UUID groceryCode) {
         Grocery grocery = groceryService.findGroceryByID(groceryCode);
-        return new ResponseEntity<>(grocery,HttpStatus.OK);
+        return new ResponseEntity<>(grocery, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -49,8 +49,8 @@ public class GroceryResource {
 
     //Update
     @PutMapping("/update")
-    public ResponseEntity<Grocery> updateEmployee(@RequestBody Grocery employee){
-        Grocery updateGrocery = groceryService.updateGrocery(employee);
+    public ResponseEntity<Grocery> updateEmployee(@RequestBody Grocery grocery) {
+        Grocery updateGrocery = groceryService.updateGrocery(grocery);
         return new ResponseEntity<>(updateGrocery, HttpStatus.OK);
     }
 
