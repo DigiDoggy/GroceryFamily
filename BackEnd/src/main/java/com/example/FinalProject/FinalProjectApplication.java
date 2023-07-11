@@ -1,19 +1,40 @@
 package com.example.FinalProject;
 
+import com.example.FinalProject.model.Grocery;
+import com.example.FinalProject.service.GroceryInfoService;
+import com.example.FinalProject.service.GroceryService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class FinalProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FinalProjectApplication.class, args);
+		// original
+//		SpringApplication.run(FinalProjectApplication.class, args);
+//
+//
+//		GroceryInfoService groceryInfoService;
+//		List<String> productInfoFromDB = groceryInfoService.getProductInfoFromDB();
+
+		//TODO some problem with database, don`t give answer. Need to check version MySQL and Hibernate
+		//gpt chat
+		ApplicationContext context = SpringApplication.run(FinalProjectApplication.class, args);
+
+		GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
+		List<String> productInfoFromDB = groceryInfoService.getProductInfoFromDB();
+
+
+		productInfoFromDB.forEach(System.out::println);
+
 	}
 	@Bean
 	public CorsFilter corsFilter() {
@@ -29,5 +50,8 @@ public class FinalProjectApplication {
 		UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
+
+
+
 	}
 }

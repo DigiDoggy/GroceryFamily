@@ -1,16 +1,16 @@
 package com.example.FinalProject.Parser;
 
-import com.example.FinalProject.service.GroceryInfoService;
+import com.example.FinalProject.service.GroceryService;
 
 abstract class WebParser {
-    private GroceryInfoService groceryInfoService;
+    private GroceryService groceryService;
 
-    public WebParser(GroceryInfoService groceryInfoService){
-        this.groceryInfoService=groceryInfoService;
+    public WebParser(GroceryService groceryService){
+        this.groceryService=groceryService;
     }
 
-    void logIntoWebSite(String url){
-        groceryInfoService.getGroceryNameAmount();
-    }
+
+
+
 
 }

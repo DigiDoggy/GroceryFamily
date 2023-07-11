@@ -6,15 +6,8 @@ public class Product {
 
     // path to more product //*[@id="main"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[1]/div/div[3]/div/form[3]/button[2]/svg/path
     private String name;
-
-    public BigDecimal getPricePerUnit() {
-        return pricePerUnit;
-    }
-
     private BigDecimal pricePerUnit;
     private Measurement measurement;
-    //todo mb need create something for bottles (Pant price is 0.10 eur)
-    private BigDecimal price;
     //mb good plan to not create 2 path, and just create which number of li that product is.
     private String pathToProductTag;
     private String pathToAddMore;
@@ -23,7 +16,15 @@ public class Product {
     private String addToCard="Lisa ostukorvi";
 
 
+    public BigDecimal getPricePerUnit() {
+        return pricePerUnit;
+    }
 
+
+    //todo mb need create something for bottles (Pant price is 0.10 eur)
+    private BigDecimal price;
+
+    public Product(){};
     public Product(String name, BigDecimal pricePerUnit, BigDecimal price) {
         this.name = name;
         this.pricePerUnit = pricePerUnit;
@@ -44,6 +45,10 @@ public class Product {
     }
 //Get/Setters
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPathToAddMore() {
         return pathToAddMore;
