@@ -28,15 +28,11 @@ jobs:
         if: steps.changes.outputs.frontend == 'true'
         run: npm ci
         working-directory: FrontEnd
-      - name: Install Angular CLI
+      - name: Build with npm
         if: steps.changes.outputs.frontend == 'true'
-        run: npm install -g @angular/cli
+        run: npm build
         working-directory: FrontEnd
-      - name: Build with Angular
+      - name: Test with npm
         if: steps.changes.outputs.frontend == 'true'
-        run: ng build
-        working-directory: FrontEnd
-      - name: Test with Angular
-        if: steps.changes.outputs.frontend == 'true'
-        run: ng test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
         working-directory: FrontEnd
