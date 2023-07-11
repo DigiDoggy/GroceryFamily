@@ -19,6 +19,10 @@ public class ApplicationConfiguration {
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
+
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--whitelisted-ips=127.0.0.1");
+//        WebDriver driver = new ChromeDriver(options);
     }
 
 }
