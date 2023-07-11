@@ -21,13 +21,13 @@ describe('AppComponent', () => {
   it(`should have as title 'FrontEnd'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('FrontEnd');
+    expect(app.appTitle).toEqual('FrontEnd');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('FrontEnd app is running!');
+    expect(compiled.querySelector('#addButton')?.textContent).toContain('Add');
   });
 });

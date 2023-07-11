@@ -10,9 +10,13 @@ import { GroceryService } from './grocery.service';
 })
 export class AppComponent implements OnInit {
   selectedGroceries: Grocery[] = [];
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+  appTitle= "FrontEnd";
+
+
+  // title(title: any) {
+  //   title="FrontEnd";
+  //   throw new Error('Method not implemented.');
+  // }
 
   public groceries: Grocery[] | undefined | null;
   public editGrocery:Grocery | undefined | null;
