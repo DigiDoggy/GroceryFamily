@@ -30,7 +30,7 @@ jobs:
         working-directory: FrontEnd
       - name: Build with npm
         if: steps.changes.outputs.frontend == 'true'
-        run: npm build
+        run: npm run build --if-present
         working-directory: FrontEnd
       - name: Test with npm
         if: steps.changes.outputs.frontend == 'true'
