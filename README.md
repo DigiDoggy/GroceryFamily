@@ -1,3 +1,6 @@
+[![BackEnd Build Status](https://github.com/DigiDoggy/GroceryCompare/workflows/BackEnd%20build/badge.svg)](https://github.com/DigiDoggy/GroceryCompare/actions/workflows/build-backend.yml)
+[![FrontEnd Build Status](https://github.com/DigiDoggy/GroceryCompare/workflows/FrontEnd%20build/badge.svg)](https://github.com/DigiDoggy/GroceryCompare/actions/workflows/build-frontend.yml)
+
 This program facilitates the process of ordering products by allowing users to compare prices at various stores and select the most advantageous offers based on parameters such as price and quantity. It also speeds up the ordering process by quickly providing information on prices at multiple stores simultaneously and automatically selecting the optimal option.
 
 Through price parsing and saving to a database, the user can view current prices for products at each store and choose the most suitable option for ordering products online.
