@@ -1,4 +1,4 @@
-name: frontend
+name: FrontEnd
 
 on:
   push:
@@ -12,27 +12,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Detect changes
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            frontend:
-              - 'FrontEnd/**'
       - name: Set up Node.js
-        if: steps.changes.outputs.frontend == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
       - name: Install with npm
-        if: steps.changes.outputs.frontend == 'true'
         run: npm ci
         working-directory: FrontEnd
       - name: Build with npm
-        if: steps.changes.outputs.frontend == 'true'
         run: npm run build --if-present
         working-directory: FrontEnd
       - name: Test with npm
-        if: steps.changes.outputs.frontend == 'true'
         run: npm test -- --watch=false --browsers=ChromeHeadless
         working-directory: FrontEnd
