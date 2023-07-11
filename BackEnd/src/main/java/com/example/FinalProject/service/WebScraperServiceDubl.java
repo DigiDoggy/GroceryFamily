@@ -12,11 +12,11 @@ public class WebScraperServiceDubl {
     // From parse package
     RimiParser rimiParser = new RimiParser();
     PrismaParser prismaParser= new PrismaParser();
-    BarboraParser barboraParser = new BarboraParser();
+//    BarboraParser barboraParser = new BarboraParser();
 
     List<Product> rimiProduct = rimiParser.parserProducts();
     List<Product> prismaProduct = prismaParser.parserProducts();
-    List<Product> barboraProduct = barboraParser.parserProducts();
+//    List<Product> barboraProduct = barboraParser.parserProducts();
 
     //another actions
     private void performAdditionalOperations() {

@@ -22,7 +22,7 @@ public class RimiParser implements WebSiteParser{
     }
 
     @Override
-    public void logIntoWebSite() {
+    public void logIntoWebSite(String rimiUrl) {
 
     }
 

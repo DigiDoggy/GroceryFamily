@@ -16,7 +16,7 @@ public class PrismaParser implements WebSiteParser{
     }
 
     @Override
-    public void logIntoWebSite() {
+    public void logIntoWebSite(String prismaUrl) {
 
     }
 

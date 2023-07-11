@@ -1,18 +1,20 @@
 package com.example.FinalProject;
 
 
-import com.example.FinalProject.service.WebScraperService;
+import com.example.FinalProject.Parser.BarboraParser;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
-@SpringBootApplication
+
 public class Test {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(FinalProjectApplication.class, args);
-        WebScraperService webScraperService = context.getBean(WebScraperService.class);
-        webScraperService.scrapeRimi();
+        WebDriver driver = new ChromeDriver();
+       BarboraParser barbora=new BarboraParser(driver);
+       barbora.scrapeWebSite();
 
     }
 }
