@@ -1,0 +1,32 @@
+name: build-backend
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            backend:
+              - 'BackEnd/**'
+      - name: Set up JDK
+        if: steps.changes.outputs.backend == 'true'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build and test with Maven
+        if: steps.changes.outputs.backend == 'true'
+        run: mvn -B package
+        working-directory: BackEnd
