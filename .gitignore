@@ -1,0 +1,16 @@
+# BackEnd
+target
+
+# FrontEnd
+node_modules
+.angular
+dist
+
+# IDEA
+.idea
+*.iml
+out
+
+# Visual Studio Code
+.vscode
+.editorconfig
