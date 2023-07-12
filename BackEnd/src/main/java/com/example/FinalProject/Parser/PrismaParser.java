@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public class PrismaParser extends WebParser{
+public class PrismaParser{
     private String prismaUrl= "prismaperemarket.ee";
 
 

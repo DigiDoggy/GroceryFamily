@@ -25,7 +25,6 @@ abstract class WebParser {
     }
     //Setters/Getters
 
-
     public String getUrl() {
         return url;
     }

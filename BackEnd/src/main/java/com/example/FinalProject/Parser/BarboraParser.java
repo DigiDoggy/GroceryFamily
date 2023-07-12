@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class BarboraParser extends WebParser{
+public class BarboraParser{
 
     private String url="http://www.barbora.ee";
 
