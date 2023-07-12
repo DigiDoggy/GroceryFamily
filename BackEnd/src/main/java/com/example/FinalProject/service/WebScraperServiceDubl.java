@@ -16,9 +16,9 @@ public class WebScraperServiceDubl {
    private PrismaParser prismaParser;
 //    BarboraParser barboraParser = new BarboraParser();
 
-    List<Product> rimiProduct = rimiParser.parserProducts();
-    List<Product> prismaProduct = prismaParser.parserProducts();
-    List<Product> barboraProduct = barboraParser.parserProducts();
+//    List<Product> rimiProduct = rimiParser.parserProducts();
+//    List<Product> prismaProduct = prismaParser.parserProducts();
+//    List<Product> barboraProduct = barboraParser.parserProducts();
 
     //another actions
     private void performAdditionalOperations() {

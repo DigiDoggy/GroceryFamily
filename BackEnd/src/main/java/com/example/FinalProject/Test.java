@@ -15,14 +15,14 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
 
-        ConfigurableApplicationContext context = SpringApplication.run(Test.class, args);
-        GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
-
-
-        List<String> productInfoFromDB = groceryInfoService.getProductName();
-
-
-        productInfoFromDB.forEach(System.out::println);
+//        ConfigurableApplicationContext context = SpringApplication.run(Test.class, args);
+//        GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
+//
+//
+//        List<String> productInfoFromDB = groceryInfoService.getProductName();
+//
+//
+//        productInfoFromDB.forEach(System.out::println);
 
     }
 }
