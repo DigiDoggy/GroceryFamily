@@ -16,7 +16,7 @@ public class GroceryInfoService {
         this.groceryService = groceryService;
     }
 
-    public List<String> getProductInfoFromDB(){
+    public List<String> getProductName(){
         List<Grocery> groceries=groceryService.findAllGrocery();
         List<String> products=new ArrayList<>();
 

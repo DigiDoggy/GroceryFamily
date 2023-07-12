@@ -5,39 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public class RimiParser implements WebSiteParser{
+public class RimiParser extends WebParser{
     private String rimiUrl = "rimi.ee";
-    private WebDriver driver;
 
-    public List<Product> parserProducts() {
-        return null;
-    }
-
-    @Override
-    public void scrapeWebSite() {
-        driver.get(rimiUrl);
-
-
-
-    }
-
-    @Override
-    public void logIntoWebSite(String rimiUrl) {
-
-    }
-
-    @Override
-    public void removeCookiePopup() {
-
-    }
-
-    @Override
-    public void searchProduct() {
-
-    }
-
-    @Override
-    public void addToCard() {
-
-    }
 }

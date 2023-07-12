@@ -19,7 +19,7 @@ public class Test {
         GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
 
 
-        List<String> productInfoFromDB = groceryInfoService.getProductInfoFromDB();
+        List<String> productInfoFromDB = groceryInfoService.getProductName();
 
 
         productInfoFromDB.forEach(System.out::println);
