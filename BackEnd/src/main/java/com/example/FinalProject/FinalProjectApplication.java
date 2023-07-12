@@ -18,22 +18,8 @@ import java.util.List;
 public class FinalProjectApplication {
 
 	public static void main(String[] args) {
-		// original
-//		SpringApplication.run(FinalProjectApplication.class, args);
-//
-//
-//		GroceryInfoService groceryInfoService;
-//		List<String> productInfoFromDB = groceryInfoService.getProductInfoFromDB();
 
-		//TODO some problem with database, don`t give answer. Need to check version MySQL and Hibernate
-		//gpt chat
-		ApplicationContext context = SpringApplication.run(FinalProjectApplication.class, args);
-
-		GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
-		List<String> productInfoFromDB = groceryInfoService.getProductInfoFromDB();
-
-
-		productInfoFromDB.forEach(System.out::println);
+		SpringApplication.run(FinalProjectApplication.class, args);
 
 	}
 	@Bean
