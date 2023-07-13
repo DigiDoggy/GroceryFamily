@@ -3,7 +3,6 @@ package com.example.FinalProject.productCheckOnThePage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,14 +17,13 @@ public class NameChecking {
     }
 
 
-    public void checkingName(String pageSelector){
+    public List<String> checkingName(String pageSelector){
         List<String> elements = driver.findElements(By.cssSelector("["+pageSelector+"]"))
                 .stream()
                 .map(e->e.getAttribute(pageSelector))
                 .collect(Collectors.toList());
 
-        elements.forEach(System.out::println);
-
+        return elements;
         }
 //        List<WebElement> elements= driver.findElements(By.tagName(pageSelector));
 //        for (WebElement info: elements) {

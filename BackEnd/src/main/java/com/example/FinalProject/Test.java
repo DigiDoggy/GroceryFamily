@@ -2,8 +2,12 @@ package com.example.FinalProject;
 
 
 
+
+import com.example.FinalProject.Parser.BarboraParser;
+import com.example.FinalProject.model.Product;
 import com.example.FinalProject.productCheckOnThePage.NameChecking;
 
+import com.example.FinalProject.service.GroceryInfoService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +26,7 @@ public class Test {
 
         ConfigurableApplicationContext context = SpringApplication.run(Test.class, args);
         NameChecking nameChecking = context.getBean(NameChecking.class);
+        GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
 
 
         WebDriver driver=context.getBean(WebDriver.class);
@@ -33,7 +38,14 @@ public class Test {
 
         element.click();
 
-        nameChecking.checkingName("data-b-for-cart");
+
+
+        BarboraParser barboraParser = new BarboraParser(driver,groceryInfoService);
+        List<Product> products = barboraParser.getProducts(nameChecking.checkingName("data-b-for-cart"));
+
+        for (Product product: products) {
+            System.out.println(product);;
+        }
 
         driver.quit();
 

@@ -1,12 +1,20 @@
 package com.example.FinalProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
 
     // path to more product //*[@id="main"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[1]/div/div[3]/div/form[3]/button[2]/svg/path
+    @JsonProperty("title")
     private String name;
+    @JsonProperty("price")
     private BigDecimal pricePerUnit;
+
     private Measurement measurement;
     //mb good plan to not create 2 path, and just create which number of li that product is.
     private String pathToProductTag;
@@ -15,7 +23,7 @@ public class Product {
     //  only for rimi yet
     private String addToCard="Lisa ostukorvi";
 
-
+    @JsonIgnore
     public BigDecimal getPricePerUnit() {
         return pricePerUnit;
     }
