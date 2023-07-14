@@ -1,3 +1,5 @@
+**15.07**
+* Created method BarboraParser.getProducts (Mb it is too long) 
 **14.07**
 * Iˇm trying get product info for searching rimi page,
 like barbora pages. But on the rimi page i need different
