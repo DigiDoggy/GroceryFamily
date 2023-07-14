@@ -45,7 +45,7 @@ public class Test {
 
 
         BarboraParser barboraParser = new BarboraParser(driver,groceryInfoService);
-        List<Product> products = barboraParser.getProducts(nameChecking.checkingName("data-b-for-cart"));
+        List<Product> products = barboraParser.getProducts(barboraParser.getGroceriesInfoOnThePage("data-b-for-cart"));
 
 
         for (Product product: products) {

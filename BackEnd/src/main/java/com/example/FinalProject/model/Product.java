@@ -13,6 +13,8 @@ public class Product {
     @JsonProperty("title")//for barbora
     private String name;
     @JsonProperty("price")//barbora
+    private BigDecimal price;
+
     private BigDecimal pricePerUnit;
 
     private Measurement measurement;
@@ -28,9 +30,12 @@ public class Product {
         return pricePerUnit;
     }
 
+    public void setPricePerUnit(BigDecimal pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
 
     //todo mb need create something for bottles (Pant price is 0.10 eur)
-    private BigDecimal price;
+
 
     public Product(){};
     public Product(String name, BigDecimal pricePerUnit, BigDecimal price) {
@@ -47,8 +52,11 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
-                ", price=" + pricePerUnit +
+                ", pricePerUnit=" + pricePerUnit +
                 ", measurement=" + measurement +
+                ", price=" + price +
+
+
                 '}';
     }
 //Get/Setters
@@ -92,4 +100,7 @@ public class Product {
         return measurement;
     }
 
+    public void setMeasurement(String productName) {
+        this.measurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(productName));
+    }
 }
