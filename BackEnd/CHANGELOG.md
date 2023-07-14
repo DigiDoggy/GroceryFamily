@@ -1,3 +1,10 @@
+**14.07**
+* Iˇm trying get product info for searching rimi page,
+like barbora pages. But on the rimi page i need different
+option
+* Create some comments for WebParser.class 
+* Override some methods from WebParse.class to BarboraParser.
+
 **13.07**
 test
 * Started parsing

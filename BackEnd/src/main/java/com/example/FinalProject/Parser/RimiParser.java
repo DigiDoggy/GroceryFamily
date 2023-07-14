@@ -6,8 +6,11 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public class RimiParser{
+public class RimiParser extends WebParser{
     private String rimiUrl = "rimi.ee";
 
-
+    public RimiParser(WebDriver driver, GroceryInfoService groceryInfoService) {
+        super(driver, groceryInfoService);
+        this.rimiUrl = rimiUrl;
+    }
 }

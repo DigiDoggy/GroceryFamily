@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 public class Product {
 
     // path to more product //*[@id="main"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[1]/div/div[3]/div/form[3]/button[2]/svg/path
-    @JsonProperty("title")
+    @JsonProperty("title")//for barbora
     private String name;
-    @JsonProperty("price")
+    @JsonProperty("price")//barbora
     private BigDecimal pricePerUnit;
 
     private Measurement measurement;

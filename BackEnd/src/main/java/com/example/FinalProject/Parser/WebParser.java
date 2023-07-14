@@ -55,47 +55,33 @@ abstract class WebParser {
         driver.get(url);
     }
 
+    //for work for Rimi and Barbora it is good.
+    // For Prisma I don't need consent to save cookie
     void removeCookiePopup() {
+        WebElement element =
+                driver.findElement(By
+                        .id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
+
+
+        element.click();
     }
-    public List<String> allProductsOnThePage(){
-        //For barboraParser
-//        List<String> elements = driver.findElements(By.cssSelector("["+pageSelector+"]"))
-//                .stream()
-//                .map(e->e.getAttribute(pageSelector))
-//                .collect(Collectors.toList());
-//
-//        elements.forEach(System.out::println);
+
+    //get List of product on the page. Parsing for getting all information
+    // about product on the searching page
+    public List<String> getGroceriesInfoOnThePage(String cssSelector){
+
         return null;
     }
 
-    void searchProduct(String pageSelector) {
-       List<String> productName= groceryInfoService.getProductName();
-        for (String name: productName) {
-            WebElement searchingBar= driver.findElement(By.id(pageSelector));
-            searchingBar.sendKeys(name);
-            //need method from checkingName class
 
-            searchingBar.click();
 
-        }
 
-    }
 
-    //Mb method only for barboraParser( work with Json)
-    public List<Product> getProducts(List<String> json){
-        List<Product> products= new ArrayList<>();
 
-        for (String jsonString: json) {
-            try{
-                ObjectMapper mapper = new ObjectMapper();
-                Product product = mapper.readValue(jsonString,Product.class);
-                products.add(product);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+    //Sort for getting Product obj
+    public List<Product> getProducts(List<String> info){
 
-        return products;
+        return null;
     }
     void addToCard() {
     }

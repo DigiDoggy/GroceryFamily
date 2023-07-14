@@ -4,6 +4,7 @@ package com.example.FinalProject;
 
 
 import com.example.FinalProject.Parser.BarboraParser;
+import com.example.FinalProject.Parser.RimiParser;
 import com.example.FinalProject.model.Product;
 import com.example.FinalProject.productCheckOnThePage.NameChecking;
 
@@ -32,9 +33,12 @@ public class Test {
         WebDriver driver=context.getBean(WebDriver.class);
 
         driver.get("https://barbora.ee/otsing?q=piim");
+//        https://barbora.ee/otsing?q=piim
+        //https://www.rimi.ee/epood/ee/otsing?query=T%C3%A4ispiim
         WebElement element =
                 driver.findElement(By
                         .id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
+
 
         element.click();
 
@@ -42,6 +46,7 @@ public class Test {
 
         BarboraParser barboraParser = new BarboraParser(driver,groceryInfoService);
         List<Product> products = barboraParser.getProducts(nameChecking.checkingName("data-b-for-cart"));
+
 
         for (Product product: products) {
             System.out.println(product);;
