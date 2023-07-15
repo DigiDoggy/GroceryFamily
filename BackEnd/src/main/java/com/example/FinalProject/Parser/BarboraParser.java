@@ -1,6 +1,7 @@
 package com.example.FinalProject.Parser;
 
 import com.example.FinalProject.model.Product;
+import com.example.FinalProject.productCheckOnThePage.NameChecking;
 import com.example.FinalProject.service.GroceryInfoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
@@ -44,8 +45,6 @@ public class BarboraParser extends WebParser {
                 Product product = mapper.readValue(jsonString, Product.class);
                 List<BigDecimal> list = new ArrayList<>();
 
-                //Todo need to correct the pattern, if there is a space after the comma and the number is written together with the letter symbol, then there is a space between them (example: Piim ALMA 2.5%, 0.5L). If there is a dot after the alphabetic character and then a digit, then after the dot there is a space and after the digit (example 1: Piim.põh.piimasegu APTAMIL 1 al.sün.800g \
-                //Todo example 2: Piim VÄIKE TOM UHT maasika&vitam.,200ml)
                 product.setMeasurement(product.getName());
 
                 product.setPricePerUnit(getUnitPrice(index++));
@@ -57,6 +56,8 @@ public class BarboraParser extends WebParser {
             }
         }
 
+        NameChecking.checkingName(products,getNamesFromDB());
+        setOnThePage(products);
         return products;
     }
 

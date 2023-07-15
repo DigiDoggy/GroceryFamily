@@ -2,6 +2,7 @@ package com.example.FinalProject.Parser;
 
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.example.FinalProject.model.Product;
+import com.example.FinalProject.productCheckOnThePage.NameChecking;
 import com.example.FinalProject.service.GroceryInfoService;
 import com.example.FinalProject.service.GroceryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +22,15 @@ abstract class WebParser {
 
     protected String url;
     protected WebDriver driver;
+    protected NameChecking nameChecking;
+    protected List<Product> onThePage;
+    protected List<String> namesFromDB;
+    protected List<String> quantityFromDB;
+
+
+
+
+
     @Autowired
     protected GroceryInfoService groceryInfoService;
 
@@ -29,6 +40,22 @@ abstract class WebParser {
     }
     //Setters/Getters
 
+
+    public List<String> getNamesFromDB() {
+        return namesFromDB=groceryInfoService.getProductName();
+    }
+
+    public List<String> getQuantityFromDB(){
+        return quantityFromDB=groceryInfoService.getQuantity();
+    }
+
+    public List<Product> getOnThePage() {
+        return onThePage;
+    }
+
+    public void setOnThePage(List<Product> onThePage) {
+        this.onThePage = onThePage;
+    }
     public String getUrl() {
         return url;
     }
@@ -70,6 +97,10 @@ abstract class WebParser {
     // about product on the searching page
     public List<String> getGroceriesInfoOnThePage(String cssSelector){
 
+        return null;
+    }
+    //Searching all price per unit on the page
+    public BigDecimal getUnitPrice(int numberOfElement) {
         return null;
     }
 
