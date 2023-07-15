@@ -1,4 +1,7 @@
 **15.07**
+* I checked for a match between the words in the product name from the DB and the store page.
+* Now in the Barbora Class, all products that are parsed are correctly displayed in the object.
+* Rewrote Measurement Class
 * Created method BarboraParser.getProducts (Mb it is too long) 
 **14.07**
 * Iˇm trying get product info for searching rimi page,
