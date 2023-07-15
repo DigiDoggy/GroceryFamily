@@ -42,7 +42,7 @@ public class Product {
         this.name = name;
         this.pricePerUnit = pricePerUnit;
         this.price = price;
-        this.measurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(name));
+        this.measurement = Measurement.setValueUnit(name);
     }
 
 
@@ -101,6 +101,6 @@ public class Product {
     }
 
     public void setMeasurement(String productName) {
-        this.measurement = Measurement.setValueUnit(Measurement.getArrayFromProductName(productName));
+        this.measurement = Measurement.setValueUnit(productName);
     }
 }
