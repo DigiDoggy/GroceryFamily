@@ -36,18 +36,57 @@ public class Measurement {
         this.unit = unit;
     }
 
+    //    public static ArrayList<String> getArrayFromProductName(String product) {
+//        String regex = "\\d+(?:,\\d+)?(?:%-\\d+(?:,\\d+)?%)?|\\w+";
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(product);
+//
+//        List<String> result = new ArrayList<>();
+//
+//        while (matcher.find()) {
+//            result.add(matcher.group());
+//        }
+//
+//        return (ArrayList<String>) result;
+//    }
+
+
+//    public static Measurement setValueUnit(ArrayList<String> arrayList) {
+//        List<String> units = Arrays.asList("kg", "g", "l", "ml", "tk");
+//        String unit = "";
+//        String value = "";
+//        Measurement measurement = new Measurement();
+//        for (int i = 0; i < arrayList.size(); i++) {
+//            if (units.contains(arrayList.get(i))) {
+//                unit = arrayList.get(i);
+//                if (i > 0) {
+//                    value = arrayList.get(i - 1);
+//                }
+//                measurement.setUnit(unit);
+//                measurement.setValue(value);
+//            }
+//        }
+//        return measurement;
+//    }
+
     public static ArrayList<String> getArrayFromProductName(String product) {
-        String regex = "\\d+(?:,\\d+)?(?:%-\\d+(?:,\\d+)?%)?|\\w+";
+        String regex = "\\d+(?:,\\d+)?(?:%-\\d+(?:,\\d+)?%)?|\\w+|\\d+\\w+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(product);
 
-        List<String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
 
         while (matcher.find()) {
-            result.add(matcher.group());
+            String group = matcher.group();
+            if (Character.isDigit(group.charAt(0)) && Character.isLetter((group.charAt(group.length() - 1)))) {
+                String[] split = group.split("(?<=\\d)(?=\\D)");
+                result.addAll(Arrays.asList(split));
+            } else {
+                result.add(group);
+            }
         }
 
-        return (ArrayList<String>) result;
+        return result;
     }
 
     public static Measurement setValueUnit(ArrayList<String> arrayList) {
@@ -58,7 +97,7 @@ public class Measurement {
         for (int i = 0; i < arrayList.size(); i++) {
             if (units.contains(arrayList.get(i))) {
                 unit = arrayList.get(i);
-                if (i > 0) {
+                if (i > 0 && isNumeric(arrayList.get(i - 1))) {
                     value = arrayList.get(i - 1);
                 }
                 measurement.setUnit(unit);
@@ -66,6 +105,15 @@ public class Measurement {
             }
         }
         return measurement;
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 
     @Override

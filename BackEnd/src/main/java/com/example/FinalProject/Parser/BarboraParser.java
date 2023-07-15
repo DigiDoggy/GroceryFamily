@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BarboraParser extends WebParser{
+public class BarboraParser extends WebParser {
 
-    private String url="http://www.barbora.ee";
+    private String url = "http://www.barbora.ee";
 
 
     public BarboraParser(WebDriver driver, GroceryInfoService groceryInfoService) {
@@ -23,9 +23,9 @@ public class BarboraParser extends WebParser{
 
     @Override
     public List<String> getGroceriesInfoOnThePage(String pageSelector) {
-        List<String> elements = driver.findElements(By.cssSelector("["+pageSelector+"]"))
+        List<String> elements = driver.findElements(By.cssSelector("[" + pageSelector + "]"))
                 .stream()
-                .map(e->e.getAttribute(pageSelector))
+                .map(e -> e.getAttribute(pageSelector))
                 .collect(Collectors.toList());
 
         return elements;
@@ -34,29 +34,42 @@ public class BarboraParser extends WebParser{
     //get products from Json
     @Override
     public List<Product> getProducts(List<String> info) {
-        List<Product> products= new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
-        for (String jsonString: info) {
-            try{
+        int index = 0;
+        for (String jsonString : info) {
+
+            try {
                 ObjectMapper mapper = new ObjectMapper();
-                Product product = mapper.readValue(jsonString,Product.class);
-
-                BigDecimal parsePricePerUnit =new BigDecimal(driver.findElement(By
-                                .className("b-product-price--extra"))
-                        .getText().replace("€","")
-                        .replaceAll("/.*",""));
+                Product product = mapper.readValue(jsonString, Product.class);
+                List<BigDecimal> list = new ArrayList<>();
 
                 //Todo need to correct the pattern, if there is a space after the comma and the number is written together with the letter symbol, then there is a space between them (example: Piim ALMA 2.5%, 0.5L). If there is a dot after the alphabetic character and then a digit, then after the dot there is a space and after the digit (example 1: Piim.põh.piimasegu APTAMIL 1 al.sün.800g \
                 //Todo example 2: Piim VÄIKE TOM UHT maasika&vitam.,200ml)
                 product.setMeasurement(product.getName());
 
-                product.setPricePerUnit(parsePricePerUnit);
+                product.setPricePerUnit(getUnitPrice(index++));
+
+
                 products.add(product);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         return products;
+    }
+
+    //Searching all price per unit on the page
+    public BigDecimal getUnitPrice(int numberOfElement) {
+        List<BigDecimal> elements = driver.findElements(By.className("b-product-price--extra"))
+                .stream()
+                .map(e -> new BigDecimal(e.getText()
+                        .replace("€", "")
+                        .replaceAll("/.*", "")))
+                .toList();
+
+
+        return elements.get(numberOfElement);
     }
 }
