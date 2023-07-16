@@ -26,7 +26,6 @@ public class Test {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext context = SpringApplication.run(Test.class, args);
-        NameChecking nameChecking = context.getBean(NameChecking.class);
         GroceryInfoService groceryInfoService = context.getBean(GroceryInfoService.class);
 
 
@@ -45,7 +44,8 @@ public class Test {
 
 
         BarboraParser barboraParser = new BarboraParser(driver,groceryInfoService);
-        List<Product> products = barboraParser.getProducts(barboraParser.getGroceriesInfoOnThePage("data-b-for-cart"));
+        List<Product> products = barboraParser.getProductsFromPage(barboraParser.getGroceriesInfoOnThePage("data-b-for" +
+                "-cart"));
 
 
         for (Product product: products) {
