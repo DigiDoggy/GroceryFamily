@@ -34,6 +34,7 @@ public class BarboraParser extends WebParser {
 
     //get products from Json
 
+    //todo how best to use classes for so as not to do unnecessary loading. Transfer methods to a class where there is already some kind of functionality or transfer the results to a written method so that it checks further there
     @Override
     public List<Product> getProductsFromPage(List<String> info) {
         List<String> getNamesFromDB = super.getNamesFromDB();
