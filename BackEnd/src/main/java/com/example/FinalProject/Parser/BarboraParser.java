@@ -40,10 +40,11 @@ public class BarboraParser extends WebParser {
         List<String> getNamesFromDB = super.getNamesFromDB();
         List<Product> products = new ArrayList<>();
 
+        System.out.println("Barbora parser getProductsFromPage -_------------------------------------- starts");
 
+        int value=0;
         int index = 0;
         for (String jsonString : info) {
-
             boolean isProductInitialized = false;
             Product product = new Product();
 
@@ -56,20 +57,35 @@ public class BarboraParser extends WebParser {
                 e.printStackTrace();
             }
 
+
+            System.out.println("Barbora parser getProductsFromPage -_------------------------------------- starts"+ value);
+
             if (isProductInitialized) {
                 product.setMeasurement(product.getName().toLowerCase());
                 product.setPricePerUnit(getUnitPrice(index));
-//
-                if (ProductFilter.containsAllWords(product.getName(), "täispiim")) {
+                System.out.println("Barbora parser isProductInitialized  -_------------------------------------- " +
+                        "starts"+ value);
+                value++;
+
+                if (ProductFilter.containsAllWords(product.getName().toLowerCase(), "piim")) {
                     products.add(product);
+                    System.out.println("Added product: " + product.getName() + ", price: " + product.getPricePerUnit());
                     index++;
+
                 }
             }
 
 
         }
 
+        System.out.println("Barbora parser getProductsFromPage -_------------------------------------- over");
+
         setOnThePage(products);
+        //test;
+        ProductFilter.cheaperPrice(products);
+        for (Product product: products) {
+            System.out.println(product + "-------- cheapest product ----------");
+        }
         return products;
     }
 
