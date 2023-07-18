@@ -4,11 +4,11 @@ import com.example.FinalProject.service.GroceryInfoService;
 import org.openqa.selenium.WebDriver;
 
 
-public class RimiParser extends WebParser{
+public class RimiParser {
     private final String rimiUrl = "rimi.ee";
 
 
-    public RimiParser(WebDriver driver, GroceryInfoService groceryInfoService) {
-        super(driver, groceryInfoService);
-    }
+//    public RimiParser(WebDriver driver, GroceryInfoService groceryInfoService) {
+//        super(driver, groceryInfoService);
+//    }
 }
