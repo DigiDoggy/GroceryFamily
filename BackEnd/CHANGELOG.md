@@ -1,3 +1,6 @@
+**18.07**
+* test for Cheapest product 
+
 **16.07**
 * Did test for GroceryInfoService
 * redesigned the check of products received from the web page, now it immediately checks if the name is similar or not ( need to add a part of the code where the product name is entered in the search string in order to debug the work of searching for the desired product)
