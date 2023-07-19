@@ -61,32 +61,35 @@ public class BarboraParser extends WebParser {
             System.out.println("Barbora parser getProductsFromPage -_------------------------------------- starts"+ value);
 
             if (isProductInitialized) {
-                product.setMeasurement(product.getName().toLowerCase());
+                product.setMeasurement(product.getName());
                 product.setPricePerUnit(getUnitPrice(index));
                 System.out.println("Barbora parser isProductInitialized  -_------------------------------------- " +
                         "starts"+ value);
                 value++;
 
-                if (ProductFilter.containsAllWords(product.getName().toLowerCase(), "piim")) {
+
                     products.add(product);
-                    System.out.println("Added product: " + product.getName() + ", price: " + product.getPricePerUnit());
+
                     index++;
 
-                }
             }
 
 
         }
 
-        System.out.println("Barbora parser getProductsFromPage -_------------------------------------- over");
+        nameFilter(products, "piim");
 
         setOnThePage(products);
-        //test;
-        ProductFilter.cheaperPrice(products);
-        for (Product product: products) {
-            System.out.println(product + "-------- cheapest product ----------");
-        }
+
+
         return products;
+    }
+
+    @Override
+    public Product getCheapestProduct(List<Product> products) {
+        System.out.println(getCheapestProduct(products)+"------------------------------Cheapest Product " +
+                "----------------------");
+        return super.getCheapestProduct(products);
     }
 
     //Searching all price per unit on the page

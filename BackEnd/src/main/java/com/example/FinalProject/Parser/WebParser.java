@@ -2,6 +2,7 @@ package com.example.FinalProject.Parser;
 
 import com.example.FinalProject.model.Product;
 import com.example.FinalProject.service.GroceryInfoService;
+import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -82,6 +83,16 @@ abstract class WebParser {
 
 
         element.click();
+    }
+// Filter
+    public Product getCheapestProduct(List<Product> products) {
+        return ProductFilter.cheaperPrice(products);
+    }
+    // изменить метот в фильтре чтоб работал с арей листами
+    public List<Product> nameFilter(List<Product> products, String nameFromDB){
+        ProductFilter.containsAllWords(products,nameFromDB);
+
+        return products;
     }
 
     //get List of product on the page. Parsing for getting all information

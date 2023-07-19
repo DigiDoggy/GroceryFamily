@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GroceryCompare</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/jsfile.js"></script>
+	<script src="js/jsfile.js"></script>
+</head>
+<body>
+	<h1>Grocery Compare</h1>
+
+	<table>
+		<thead>
+			
+			<tr>
+				<th>
+					<input type="checkbox" id="selectAll">
+					<label for="selectAll">Take all</label>
+				</th>
+				<th>Grocery</th>
+				<th>Amount</th>
+				<th id="rimiPrice">Rimi price</th>
+				<th>Prisma price</th>
+				<th>Barbora price</th>
+				<th  id="invisible"><button id="startButton">Start</button></th>
+				
+			</tr>
+			
+			
+		</thead>
+		<tbody>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td contenteditable="true">Milk</td>
+				<td contenteditable="true">2</td>
+				<td>1.99</td>
+				<td>2.10</td>
+				<td>1.89</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox"></td>
+				<td contenteditable="true">Bread</td>
+				<td contenteditable="true">1</td>
+				<td>0.99</td>
+				<td>1.05</td>
+				<td>0.90</td>
+			</tr>
+			<!-- добавить другие продукты сюда -->
+		</tbody>
+		<tfoot>
+			<tr>
+				<th id="invisible"></th>
+				<th id="invisible"></th>
+				<th id="invisible"></th>
+				<th id="rimiTotal"></th>
+				<th id="prismaPrice"></th>
+				<th id="barboraPrice"></th>
+			</tr>
+			<tr>
+				<th id="invisible"><button id="addButton">Add</button></th>
+				<th id="invisible"><button id="deleteButton">Delete</button></th>
+				<th id="invisible"></th>
+				<th id="invisible"><button id="orderRimiButton" class="orderButton">Order </button></th>
+				<th id="invisible"><button id="orderPrismaButton" class="orderButton">Order </button></th>
+				<th id="invisible"><button id="orderBarboraButton" class="orderButton">Order </button></th>
+			</tr>
+		</tfoot>
+	</table>
+
+	<script>
+
+
+document.getElementById("selectAll").addEventListener("click", function() {
+  var checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = this.checked;
+  }
+});
+		document.getElementById("addButton").addEventListener("click", function() {
+	// добавить новую строку в таблицу
+	var newRow = "<tr><td><input type='checkbox'></td><td contenteditable='true'></td><td contenteditable='true'></td><td></td><td></td><td></td></tr>";
+	document.querySelector("table tbody").insertAdjacentHTML("beforeend", newRow);
+});
+
+document.getElementById("deleteButton").addEventListener("click", function() {
+	// удалить выбранные строки из таблицы
+	var checkboxes = document.querySelectorAll("table tbody input[type='checkbox']:checked");
+	for (var i = 0; i < checkboxes.length; i++) {
+		var row = checkboxes[i].parentNode.parentNode;
+		row.parentNode.removeChild(row);
+	}
+});
+
+document.getElementById("deleteAllButton").addEventListener("click", function() {
+	// удалить все строки из таблицы
+	document.querySelector("table tbody").innerHTML = "";
+});
+
+document.getElementById("orderRimiButton").addEventListener("click", function() {
+	// отправить заказ в Rimi
+	alert("Заказ отправлен в Rimi!");
+});
+
+document.getElementById("orderPrismaButton").addEventListener("click", function() {
+	// отправить заказ в Prisma
+	alert("Заказ отправлен в Prisma!");
+});
+document.getElementById("orderBarboraButton").addEventListener("click", function() {
+// отправить заказ в Barbora
+alert("Заказ отправлен в Barbora!");
+});
+
+document.getElementById("startButton").addEventListener("click", function() {
+// начать процесс покупки
+alert("Процесс покупки начат!");
+});
+
+// обработчик для чекбокса "Выбрать все"
+document.getElementById("selectAll").addEventListener("click", function() {
+var checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+for (var i = 0; i < checkboxes.length; i++) {
+	checkboxes[i].checked = this.checked;
+}
+});
+	</script>
+
+
+	
+</body>
+</html>

@@ -10,12 +10,26 @@ import java.util.List;
 
 public class ProductFilter {
 
-    public static boolean containsAllWords(String str, String substring) {
-        String[] strWords = str.split("\\s+");
-        String[] subWords = substring.split("\\s+");
-        Arrays.sort(strWords);
+    public static List<Product> containsAllWords(List<Product> products, String substring) {
+        String[] subWords = substring
+                .toLowerCase()
+                .split("\\s+");
         Arrays.sort(subWords);
-        return Arrays.asList(strWords).containsAll(Arrays.asList(subWords));
+
+        for (Product product: products) {
+            String[] strWords = product
+                    .getName()
+                    .split("\\s+");
+            Arrays.sort(strWords);
+
+            if(!Arrays.asList(strWords).containsAll(Arrays.asList(subWords))){
+                products.remove(product);
+            }
+            //todo must be deleted
+            System.out.println("Added product: " + product.getName() + ", price: " + product.getPricePerUnit());
+        }
+
+        return products;
     }
 
     //gives the cheapest product
