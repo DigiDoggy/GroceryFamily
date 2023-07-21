@@ -23,7 +23,7 @@ public class Product {
     private String pathToAddMore;
     // For add product to card
     //  only for rimi yet
-    private String addToCard="Lisa ostukorvi";
+    private String addToCard = "Lisa ostukorvi";
 
     @JsonIgnore
     public BigDecimal getPricePerUnit() {
@@ -37,15 +37,17 @@ public class Product {
     //todo mb need create something for bottles (Pant price is 0.10 eur)
 
 
-    public Product(){};
+    public Product() {
+    }
+
+    ;
+
     public Product(String name, BigDecimal pricePerUnit, BigDecimal price) {
         this.name = name;
         this.pricePerUnit = pricePerUnit;
         this.price = price;
         this.measurement = Measurement.setValueUnit(name);
     }
-
-
 
 
     @Override
@@ -79,8 +81,8 @@ public class Product {
     }
 
     public void setPathToProductTag(int i) {
-        this.pathToProductTag = "//*[@id='main']/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+ i +"]/div/div[3]/div/form[2]/button";
-        setPathToAddMore("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li["+i+"]/div/div[3]/div/form[3]/button[2]");
+        this.pathToProductTag = "//*[@id='main']/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[" + i + "]/div/div[3]/div/form[2]/button";
+        setPathToAddMore("//*[@id=\"main\"]/section/div[1]/div/div[2]/div[1]/div/div[2]/ul/li[" + i + "]/div/div[3]/div/form[3]/button[2]");
     }
 
     public String getAddToCardPage() {
