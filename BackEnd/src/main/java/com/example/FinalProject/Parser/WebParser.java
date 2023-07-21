@@ -1,21 +1,27 @@
 package com.example.FinalProject.Parser;
 
+import com.example.FinalProject.config.ApplicationConfiguration;
 import com.example.FinalProject.model.Product;
 import com.example.FinalProject.service.GroceryInfoService;
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 
 @Component
 abstract class WebParser {
 
     protected String url;
+    protected String addToCardLinktext;
     protected WebDriver driver;
     protected List<Product> onThePage;
     protected List<String> namesFromDB;
@@ -115,7 +121,16 @@ abstract class WebParser {
         return null;
     }
 
-    void addToCard() {
+    public void addToCard(Product product) {
+
+        //find were is product
+        WebElement productDiv = driver.findElement(By.linkText(product.getName()));
+        ApplicationConfiguration.waiting(15);
+        //find button to add product
+        WebElement button = driver.findElement(By.xpath("//button[normalize-space()='" + "Ostukorvi" + "']"));
+        button.click();
+
+
     }
 
 

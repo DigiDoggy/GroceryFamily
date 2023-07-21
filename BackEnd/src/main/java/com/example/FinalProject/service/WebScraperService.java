@@ -256,7 +256,7 @@
 //        return productToBuy(products);
 //    }
 //
-//    //Searching cheapest product
+//    //Searching cheapest product@
 //    public Product productToBuy(List<Product> products){
 //        Product cheapestProduct = Collections.min(products,Comparator.comparing(Product::getPricePerUnit));
 //        System.out.println(cheapestProduct.toString());

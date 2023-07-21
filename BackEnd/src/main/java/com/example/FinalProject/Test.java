@@ -4,23 +4,26 @@ package com.example.FinalProject;
 
 
 import com.example.FinalProject.Parser.BarboraParser;
-import com.example.FinalProject.Parser.RimiParser;
+
 import com.example.FinalProject.model.Product;
-import com.example.FinalProject.productCheckOnThePage.NameChecking;
+
 
 import com.example.FinalProject.service.GroceryInfoService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
-
+//ToDO need coke to log in to the site ***************
 @SpringBootApplication
 public class Test {
     public static void main(String[] args) {
@@ -42,17 +45,28 @@ public class Test {
         element.click();
 
 
+        Product product=new Product("Piim AASA 2,5%, 2L",new BigDecimal(12), new BigDecimal(14));
+                BarboraParser barboraParser=new BarboraParser(driver,groceryInfoService);
 
-        BarboraParser barboraParser = new BarboraParser(driver,groceryInfoService);
-        List<Product> products = barboraParser.getProductsFromPage(barboraParser.getGroceriesInfoOnThePage("data-b-for" +
-                "-cart"));
-
-
-        for (Product product: products) {
-            System.out.println(product);;
+                Thread thread=new Thread();
+        try {
+            thread.sleep(20);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        barboraParser.addToCard(product);
 
-        driver.quit();
+
+
+//        List<Product> products = barboraParser.getProductsFromPage(barboraParser.getGroceriesInfoOnThePage("data-b-for" +
+//                "-cart"));
+//
+//
+//        for (Product product: products) {
+//            System.out.println(product);;
+//        }
+//
+//        driver.quit();
 
 
     }
