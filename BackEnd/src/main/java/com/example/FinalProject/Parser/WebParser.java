@@ -4,6 +4,7 @@ import com.example.FinalProject.model.Product;
 import com.example.FinalProject.service.GroceryInfoService;
 import com.example.FinalProject.similarity.ProductFilter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -70,12 +71,13 @@ abstract class WebParser {
 
     //Methods
     void scrapeWebSite() {
-        logIntoWebSite(getUrl());
-        removeCookiePopup();
     }
 
     void logIntoWebSite(String url) {
         driver.get(url);
+    }
+    void  searchGrocery(List<String> namesFromDB){
+
     }
 
     //for work for Rimi and Barbora it is good.
@@ -88,6 +90,7 @@ abstract class WebParser {
 
         element.click();
     }
+
 
     // Filter
     public Product getCheapestProduct(List<Product> products) {
@@ -116,9 +119,15 @@ abstract class WebParser {
 
     //Sort for getting Product obj
     public List<Product> getProductsFromPage(List<String> info) {
-        getNamesFromDB();
 
         return null;
+    }
+    // Enter to the search bar text.
+    public void searching(String name){
+        WebElement element = driver.findElement(By.id("fti-search"));
+        element.sendKeys(name);
+        element.sendKeys(Keys.ENTER);
+        waiting(5);
     }
 
     public void addToCard(Product product) {

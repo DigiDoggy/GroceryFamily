@@ -17,7 +17,6 @@
 //
 //import static com.codeborne.selenide.Selenide.$;
 //
-//// TODO: 29-May-23  You should use selectors instead of xpath.
 ////  Understand why sometimes a product is added to the cart, and sometimes not. (Check maybe you need to check to add to cart)
 //
 //@Service

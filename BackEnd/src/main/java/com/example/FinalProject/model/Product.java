@@ -34,8 +34,6 @@ public class Product {
         this.pricePerUnit = pricePerUnit;
     }
 
-    //todo mb need create something for bottles (Pant price is 0.10 eur)
-
 
     public Product() {
     }

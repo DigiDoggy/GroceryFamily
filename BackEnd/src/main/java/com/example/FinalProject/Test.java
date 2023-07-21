@@ -18,8 +18,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.math.BigDecimal;
 
-//ToDO need coke to log in to the site ***************
-//todo remove from ApplicationConfiguration method waiting
+
 @SpringBootApplication
 public class Test {
     public static void main(String[] args) {
@@ -40,17 +39,20 @@ public class Test {
 
         element.click();
 
-
-        Product product = new Product("Piim AASA 2,5%, 2L", new BigDecimal(12), new BigDecimal(14));
         BarboraParser barboraParser = new BarboraParser(driver, groceryInfoService);
+        barboraParser.scrapeWebSite();
 
-        Thread thread = new Thread();
-        try {
-            thread.sleep(20);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        barboraParser.addToCard(product);
+
+//        Product product = new Product("Piim AASA 2,5%, 2L", new BigDecimal(12), new BigDecimal(14));
+//        BarboraParser barboraParser = new BarboraParser(driver, groceryInfoService);
+//
+//        Thread thread = new Thread();
+//        try {
+//            thread.sleep(20);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        barboraParser.addToCard(product);
 
 
 //        List<Product> products = barboraParser.getProductsFromPage(barboraParser.getGroceriesInfoOnThePage("data-b-for" +
