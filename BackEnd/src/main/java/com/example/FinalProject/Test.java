@@ -29,15 +29,15 @@ public class Test {
 
         WebDriver driver = context.getBean(WebDriver.class);
 
-        driver.get("https://barbora.ee/otsing?q=piim");
-//        https://barbora.ee/otsing?q=piim
-        //https://www.rimi.ee/epood/ee/otsing?query=T%C3%A4ispiim
-        WebElement element =
-                driver.findElement(By
-                        .id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
-
-
-        element.click();
+//        driver.get("https://barbora.ee/otsing?q=piim");
+////        https://barbora.ee/otsing?q=piim
+//        //https://www.rimi.ee/epood/ee/otsing?query=T%C3%A4ispiim
+//        WebElement element =
+//                driver.findElement(By
+//                        .id("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"));
+//
+//
+//        element.click();
 
         BarboraParser barboraParser = new BarboraParser(driver, groceryInfoService);
         barboraParser.scrapeWebSite();

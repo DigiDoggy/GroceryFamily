@@ -76,7 +76,8 @@ abstract class WebParser {
     void logIntoWebSite(String url) {
         driver.get(url);
     }
-    void  searchGrocery(List<String> namesFromDB){
+
+    void searchGrocery(List<String> namesFromDB) {
 
     }
 
@@ -95,11 +96,19 @@ abstract class WebParser {
     // Filter
     public Product getCheapestProduct(List<Product> products) {
         return ProductFilter.cheaperPrice(products);
+
     }
 
     // изменить метот в фильтре чтоб работал с арей листами
     public List<Product> nameFilter(List<Product> products, String nameFromDB) {
         ProductFilter.containsAllWords(products, nameFromDB);
+
+        for (Product product : products)
+            if (product != null){
+                System.out.println("nameFilter" + product);
+        }else{
+            System.out.println("nameFilter don`t work");
+        }
 
         return products;
     }
@@ -122,27 +131,29 @@ abstract class WebParser {
 
         return null;
     }
+
     // Enter to the search bar text.
-    public void searching(String name){
+    public void searching(String name) {
         WebElement element = driver.findElement(By.id("fti-search"));
         element.sendKeys(name);
         element.sendKeys(Keys.ENTER);
-        waiting(5);
+//        waiting(5);
     }
 
     public void addToCard(Product product) {
 
         WebElement productDiv = driver.findElement(By.linkText(product.getName()));
-        waiting(15);
+//        waiting(15);
         WebElement button = driver.findElement(By.xpath("//button[normalize-space()='" + "Ostukorvi" + "']"));
         button.click();
     }
 //Wait method
-// TODO: 21-Jul-23 in future remove static 
-    public static void waiting(int seconds) {
-        WebDriver driver = new ChromeDriver();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
-    }
+// TODO: 21-Jul-23 in future remove static
+
+
+//    public static void waiting(int seconds) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+//    }
 
 
 }
