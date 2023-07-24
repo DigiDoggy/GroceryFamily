@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 //ToDO need coke to log in to the site ***************
+// // TODO: 24-Jul-23 clear all abstract methods 
 public class BarboraParser extends WebParser {
 
     private final String barboraUrl = "http://www.barbora.ee";
@@ -34,6 +35,9 @@ public class BarboraParser extends WebParser {
             System.out.println(grocery);
             searching(grocery);
             List<Product> products = getProductsFromPage(getGroceriesInfoOnThePage("data-b-for-cart"));
+            for (Product product: products) {
+                System.out.println("getProductsFromPage"+product);
+            }
 
             System.out.println("scrapeWebSite"+products);
             //// TODO: 21-Jul-23 add price to the DB
@@ -51,8 +55,7 @@ public class BarboraParser extends WebParser {
 
     @Override
     public List<Product> getProductsFromPage(List<String> info) {
-
-        List<Product> products = new ArrayList<>();
+        List<Product> products=new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
 
 
@@ -66,6 +69,7 @@ public class BarboraParser extends WebParser {
                 e.printStackTrace();
             }
         }
+        System.out.println("getProductFromPage after mapper" + products);
 
         nameFilter(products, "piim");
         for (Product product: products) {
@@ -115,6 +119,7 @@ public class BarboraParser extends WebParser {
 
         @Override
     public List<String> getGroceriesInfoOnThePage(String pageSelector) {
+        //work
         List<String> elements = driver.findElements(By.cssSelector("[" + pageSelector + "]"))
                 .stream()
                 .map(e -> e.getAttribute(pageSelector))

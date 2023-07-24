@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -104,11 +105,11 @@ abstract class WebParser {
         ProductFilter.containsAllWords(products, nameFromDB);
 
         for (Product product : products)
-            if (product != null){
+            if (product != null) {
                 System.out.println("nameFilter" + product);
-        }else{
-            System.out.println("nameFilter don`t work");
-        }
+            } else {
+                System.out.println("nameFilter don`t work");
+            }
 
         return products;
     }
@@ -116,7 +117,6 @@ abstract class WebParser {
     //get List of product on the page. Parsing for getting all information
     // about product on the searching page
     public List<String> getGroceriesInfoOnThePage(String cssSelector) {
-
         return null;
     }
 
@@ -128,8 +128,8 @@ abstract class WebParser {
 
     //Sort for getting Product obj
     public List<Product> getProductsFromPage(List<String> info) {
-
-        return null;
+        List<Product> products = new ArrayList<>();
+        return products;
     }
 
     // Enter to the search bar text.
