@@ -47,6 +47,11 @@
     </profiles>
 
     <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>FinalProject-core</artifactId>
+        </dependency>
+
         <!-- https://github.com/SeleniumHQ/selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
