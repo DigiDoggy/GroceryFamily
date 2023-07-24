@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 //ToDO need coke to log in to the site ***************
-// // TODO: 24-Jul-23 clear all abstract methods 
+// // TODO: 24-Jul-23 clear all abstract methods
 public class BarboraParser extends WebParser {
 
     private final String barboraUrl = "http://www.barbora.ee";
@@ -69,7 +69,7 @@ public class BarboraParser extends WebParser {
                 e.printStackTrace();
             }
         }
-        System.out.println("getProductFromPage after mapper" + products);
+
 
         nameFilter(products, "piim");
         for (Product product: products) {

@@ -116,21 +116,14 @@ abstract class WebParser {
 
     //get List of product on the page. Parsing for getting all information
     // about product on the searching page
-    public List<String> getGroceriesInfoOnThePage(String cssSelector) {
-        return null;
-    }
+    abstract public List<String> getGroceriesInfoOnThePage(String cssSelector);
 
     //Searching all price per unit on the page
-    public BigDecimal getUnitPrice(int numberOfElement) {
-        return null;
-    }
+    abstract public BigDecimal getUnitPrice(int numberOfElement);
 
 
     //Sort for getting Product obj
-    public List<Product> getProductsFromPage(List<String> info) {
-        List<Product> products = new ArrayList<>();
-        return products;
-    }
+    abstract public List<Product> getProductsFromPage(List<String> info);
 
     // Enter to the search bar text.
     public void searching(String name) {
