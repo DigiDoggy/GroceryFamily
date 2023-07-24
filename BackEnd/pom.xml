@@ -11,6 +11,9 @@
     <description>An app that compares prices from different stores.</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <java.version>17</java.version>
 
         <spring-boot.version>3.1.1</spring-boot.version>
@@ -25,32 +28,32 @@
 
     <profiles>
         <profile>
-            <id>mysql</id>
+            <id>h2</id>
             <properties>
-                <spring.profiles.active>mysql</spring.profiles.active>
+                <spring.profiles.active>h2</spring.profiles.active>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
-                <!-- https://github.com/mysql/mysql-connector-j -->
+                <!-- https://github.com/h2database/h2database -->
                 <dependency>
-                    <groupId>com.mysql</groupId>
-                    <artifactId>mysql-connector-j</artifactId>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>
         <profile>
-            <id>h2</id>
+            <id>mysql</id>
             <properties>
-                <spring.profiles.active>h2</spring.profiles.active>
+                <spring.profiles.active>mysql</spring.profiles.active>
             </properties>
             <dependencies>
-                <!-- https://github.com/h2database/h2database -->
+                <!-- https://github.com/mysql/mysql-connector-j -->
                 <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>

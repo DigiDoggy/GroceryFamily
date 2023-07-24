@@ -1,15 +1,12 @@
 package com.example.FinalProject;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@Disabled("Found multiple @SpringBootConfiguration annotated classes")
-@SpringBootTest
+@SpringBootTest(classes = FinalProjectApplication.class)
 class FinalProjectApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void test() {
+        // todo: implement some better test
+    }
 }
