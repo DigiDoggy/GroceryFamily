@@ -19,6 +19,12 @@
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
 
+        <!-- https://github.com/spring-projects/spring-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+
         <!-- https://github.com/FasterXML/jackson-core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
