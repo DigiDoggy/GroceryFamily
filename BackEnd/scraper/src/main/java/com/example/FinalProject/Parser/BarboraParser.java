@@ -5,14 +5,13 @@ import com.example.FinalProject.service.GroceryInfoService;
 import com.example.FinalProject.similarity.ProductFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 //ToDO need coke to log in to the site ***************
 // // TODO: 24-Jul-23 clear all abstract methods
 public class BarboraParser extends WebParser {
