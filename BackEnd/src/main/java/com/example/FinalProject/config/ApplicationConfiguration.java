@@ -10,10 +10,8 @@ import java.time.Duration;
 
 @Configuration
 public class ApplicationConfiguration {
-
     @Bean
-    public WebDriver chromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "C:/path/to/chromedriver.exe");
+    WebDriver chromeDriver() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         WebDriver driver = new ChromeDriver(options);
@@ -21,6 +19,4 @@ public class ApplicationConfiguration {
         return driver;
 
     }
-
-
 }
