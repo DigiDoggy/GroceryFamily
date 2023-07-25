@@ -34,7 +34,7 @@
         <dependencies>
             <dependency>
                 <groupId>GroceryFamily</groupId>
-                <artifactId>FinalProject-core</artifactId>
+                <artifactId>GroceryElders</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
