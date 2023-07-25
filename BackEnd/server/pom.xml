@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.example</groupId>
-        <artifactId>FinalProject</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>GroceryFamily</groupId>
+        <artifactId>GroceryFamily</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>FinalProject-server</artifactId>
@@ -48,7 +48,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.example</groupId>
+            <groupId>GroceryFamily</groupId>
             <artifactId>FinalProject-core</artifactId>
         </dependency>
 
