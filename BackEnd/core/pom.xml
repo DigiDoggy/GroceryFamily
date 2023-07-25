@@ -5,30 +5,32 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.example</groupId>
-        <artifactId>FinalProject</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>GroceryFamily</groupId>
+        <artifactId>GroceryFamily</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>FinalProject-core</artifactId>
+    <artifactId>GroceryElders</artifactId>
 
     <dependencies>
-        <!-- https://github.com/spring-projects/spring-data-jpa -->
+        <!-- https://github.com/spring-projects -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
 
-        <!-- https://github.com/jakartaee/transactions -->
-        <dependency>
-            <groupId>jakarta.transaction</groupId>
-            <artifactId>jakarta.transaction-api</artifactId>
-        </dependency>
-
-        <!-- https://github.com/jakartaee/persistence -->
+        <!-- https://github.com/jakartaee -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
         </dependency>
 
         <!-- https://github.com/FasterXML/jackson-core -->
